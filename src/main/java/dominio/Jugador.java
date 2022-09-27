@@ -58,4 +58,9 @@ public class Jugador {
                 ", tipoJugador=" + tipoJugador +
                 '}';
     }
+
+    public boolean validarCi(String ci){
+
+    }
+
 }
