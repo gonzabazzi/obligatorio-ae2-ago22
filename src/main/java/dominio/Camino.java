@@ -4,6 +4,7 @@ import interfaz.EstadoCamino;
 
 public class Camino {
     private String codigoCentroOrigen;
+    //prueba
     private String codigoCentroDestino;
     private double costo;
     private double tiempo;
