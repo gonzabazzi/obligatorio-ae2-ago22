@@ -11,7 +11,8 @@ import interfaz.TipoJugador;
 
 public class ImplementacionSistema implements Sistema {
 
-    AbbJugador jugador;
+    AbbJugador abbJugador;
+    Jugador jugador;
 
 
     @Override
@@ -44,9 +45,25 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno buscarJugador(String ci) {
 
-        NodoAbbJugador jugadorEncontrado = jugador.buscarJugador(ci);
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
 
-        return Retorno.noImplementada();
+        if(jugador.validarCi(ci)){
+            NodoAbbJugador jugadorEncontrado = abbJugador.buscarJugador(ci);
+            if(jugadorEncontrado != null){
+                ret.valorInteger = abbJugador.iteracionesAlBuscarJugador(ci);
+                ret.valorString =
+                        ci + ";" +
+                        jugadorEncontrado.getJugador().getNombre() + ";" +
+                        jugadorEncontrado.getJugador().getEdad() + ";" +
+                        jugadorEncontrado.getJugador().getEscuela() + ";" +
+                        jugadorEncontrado.getJugador().getTipoJugador();
+                return ret;
+            }else{
+                return Retorno.error2("No se existe jugador con esa CI");
+            }
+        }else{
+            return Retorno.error1("CI con formato invalido");
+        }
     }
 
     @Override

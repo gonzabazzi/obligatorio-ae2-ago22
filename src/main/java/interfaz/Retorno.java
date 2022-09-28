@@ -17,8 +17,8 @@ public class Retorno {
     }
 
     private final Resultado resultado;
-    private final int valorInteger;
-    private final String valorString;
+    public int valorInteger;
+    public String valorString;
 
     public Retorno(Resultado resultado, int valorInteger, String valorString) {
         this.resultado = resultado;
@@ -37,6 +37,9 @@ public class Retorno {
     public String getValorString() {
         return valorString;
     }
+
+
+
 
     @Override
     public boolean equals(Object o) {
