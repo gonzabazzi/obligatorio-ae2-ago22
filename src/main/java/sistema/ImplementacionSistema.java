@@ -1,5 +1,7 @@
 package sistema;
 
+import abb.AbbJugador;
+import abb.NodoAbbJugador;
 import dominio.Jugador;
 import interfaz.Consulta;
 import interfaz.EstadoCamino;
@@ -8,6 +10,9 @@ import interfaz.Sistema;
 import interfaz.TipoJugador;
 
 public class ImplementacionSistema implements Sistema {
+
+    AbbJugador jugador;
+
 
     @Override
     public Retorno inicializarSistema(int maxCentros) {
@@ -39,7 +44,7 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno buscarJugador(String ci) {
 
-
+        NodoAbbJugador jugadorEncontrado = jugador.buscarJugador(ci);
 
         return Retorno.noImplementada();
     }
