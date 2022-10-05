@@ -62,8 +62,7 @@ public class ImplementacionSistema implements Sistema {
         if(jugador.validarCi(ci)){
             NodoAbbJugador jugadorEncontrado = abbJugador.buscarJugador(ci);
             if(jugadorEncontrado != null){
-                //ret.valorInteger = abbJugador.cantIteraciones; //Variable de entorno con el contador
-                ret.valorInteger = abbJugador.iteracionesAlBuscarJugador(ci); //Metodo para contar
+                ret.valorInteger = abbJugador.cantIteraciones;
                 ret.valorString =
                         ci + ";" +
                         jugadorEncontrado.getJugador().getNombre() + ";" +

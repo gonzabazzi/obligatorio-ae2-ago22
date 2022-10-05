@@ -60,39 +60,12 @@ public class AbbJugador {
         return raiz;
     }
 
-    //para contar la cantidad e iteraciones hasta encontrar y para mostrar los datos del
-    //jugador hay una forma mas eficiente de hacerlo que no sea hacer 2 funciones que
-    //recorran el arbol para devovler dos resultados distintos
-
-    public int iteracionesAlBuscarJugador(String ci){
-        return this.iteracionesAlBuscarJugador(this.raiz, ci);
-    }
-    private int iteracionesAlBuscarJugador(NodoAbbJugador nodo, String ci){
-
-        if(nodo == null){
-            return 0;
-        }else{
-            int cant = 0;
-            if(nodo.getJugador().getCedula().equals(ci)){
-                cant++;
-            }
-            if(formatearCi(nodo.getJugador().getCedula()) > formatearCi(ci)){
-                int cantIzq = iteracionesAlBuscarJugador(nodo.getIzq(), ci);
-                int cantDer = iteracionesAlBuscarJugador(nodo.getDer(), ci);
-                return cantDer + cantIzq + cant;
-
-            } else{
-                int cantDer = iteracionesAlBuscarJugador(nodo.getDer(), ci);
-                return cantDer + cant;
-            }
-        }
-    }
-
     public NodoAbbJugador buscarJugador(String ci){
-        return this.buscarJugador(this.raiz, ci);
+        cantIteraciones = 0;
+        return buscarJugador(raiz, ci);
     }
     private NodoAbbJugador buscarJugador(NodoAbbJugador nodo, String ci){
-        this.cantIteraciones ++;
+        cantIteraciones ++;
         if(nodo == null){
             return null;
         } else if(nodo.getJugador().getCedula().equals(ci)) {
