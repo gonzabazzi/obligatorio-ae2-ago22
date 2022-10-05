@@ -17,7 +17,17 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno inicializarSistema(int maxCentros) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+        if (maxCentros > 5) {
+            abbJugador = new AbbJugador();
+            //grafoMundo = new GrafoMundo(maxAeropuertos, true);
+            //matrizAsientos = new MatrizAsientos();
+
+
+        } else {
+            return Retorno.error1("La cantidad de centros debe ser mayor a 5.");
+        }
+        return ret;
     }
 
     @Override
@@ -27,14 +37,16 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String ci, String nombre,int edad, String escuela, TipoJugador tipo) {
-        Jugador nuevoJugador = new Jugador(ci, nombre, edad, escuela, tipo);
-        //Retorno.Resultado resultado = buscarJugador(ci).getResultado();
-
-
-
-
-
-        return Retorno.noImplementada();
+        String retorno = abbJugador.insertarJugador(ci, nombre, edad, escuela, tipo);
+        if (retorno == "1"){
+            return Retorno.error1("Los campos no pueden estar vacíos");
+        } else if (retorno == "2") {
+            return Retorno.error2("El formato de la CI no es válido");
+        } else if (retorno == "3") {
+            return Retorno.error3("Ya existe un jugador registrado con esa CI");
+        } else {
+            return Retorno.ok("El jugador fue registrado exitosamente");
+        }
     }
 
     @Override
@@ -50,7 +62,8 @@ public class ImplementacionSistema implements Sistema {
         if(jugador.validarCi(ci)){
             NodoAbbJugador jugadorEncontrado = abbJugador.buscarJugador(ci);
             if(jugadorEncontrado != null){
-                ret.valorInteger = abbJugador.iteracionesAlBuscarJugador(ci);
+                //ret.valorInteger = abbJugador.cantIteraciones; //Variable de entorno con el contador
+                ret.valorInteger = abbJugador.iteracionesAlBuscarJugador(ci); //Metodo para contar
                 ret.valorString =
                         ci + ";" +
                         jugadorEncontrado.getJugador().getNombre() + ";" +
