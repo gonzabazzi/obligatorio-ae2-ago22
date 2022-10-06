@@ -79,6 +79,63 @@ public class AbbJugador {
         }
     }
 
+    public String listarJugadoresPorCedulaAscendenteAbb(){
+        return listarJugadoresPorCedulaAscendenteAbb(raiz);
+    }
+    public String listarJugadoresPorCedulaAscendenteAbb(NodoAbbJugador nodo){
+        if(nodo == null){
+            return "";
+        } else {
+            String izq = listarJugadoresPorCedulaAscendenteAbb(nodo.getIzq());
+            String stringNodo = nodo.getJugador().getCedula() + ";" +
+                    nodo.getJugador().getNombre() + ";" +
+                    nodo.getJugador().getEdad() + ";" +
+                    nodo.getJugador().getEscuela() + ";" +
+                    nodo.getJugador().getTipoJugador() + "|";
+            String der = listarJugadoresPorCedulaAscendenteAbb(nodo.getDer());
+            return izq + stringNodo + der;
+        }
+    }
+
+    public String listarJugadoresPorCedulaDescendenteAbb(){
+        return listarJugadoresPorCedulaDescendenteAbb(raiz);
+    }
+    public String listarJugadoresPorCedulaDescendenteAbb(NodoAbbJugador nodo){
+        if(nodo == null){
+            return "";
+        } else {
+            String izq = listarJugadoresPorCedulaDescendenteAbb(nodo.getIzq());
+            String stringNodo = nodo.getJugador().getCedula() + ";" +
+                    nodo.getJugador().getNombre() + ";" +
+                    nodo.getJugador().getEdad() + ";" +
+                    nodo.getJugador().getEscuela() + ";" +
+                    nodo.getJugador().getTipoJugador() + "|";
+            String der = listarJugadoresPorCedulaDescendenteAbb(nodo.getDer());
+            return der + stringNodo + izq;
+        }
+    }
+
+    public String listarJugadoresPorTipoAbb(TipoJugador tipoJugador){
+        return listarJugadoresPorTipoAbb(raiz, tipoJugador);
+    }
+    public String listarJugadoresPorTipoAbb(NodoAbbJugador nodo, TipoJugador tipoJugador){
+        if(nodo == null){
+            return "";
+        } else {
+            String izq = listarJugadoresPorTipoAbb(nodo.getIzq(), tipoJugador);
+            String stringNodo = "";
+            if(nodo.getJugador().getTipoJugador().equals(tipoJugador)) {
+                stringNodo = nodo.getJugador().getCedula() + ";" +
+                        nodo.getJugador().getNombre() + ";" +
+                        nodo.getJugador().getEdad() + ";" +
+                        nodo.getJugador().getEscuela() + ";" +
+                        nodo.getJugador().getTipoJugador() + "|";
+            }
+            String der = listarJugadoresPorTipoAbb(nodo.getDer(), tipoJugador);
+            return der + stringNodo + izq;
+        }
+    }
+
     public int formatearCi (String ci){
         return Integer.parseInt(ci.replace(".","").replace("-",""));
     }

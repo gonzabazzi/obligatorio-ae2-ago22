@@ -80,17 +80,27 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresPorCedulaAscendente() {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+        ret.valorString = abbJugador.listarJugadoresPorCedulaAscendenteAbb();
+        return ret;
     }
 
     @Override
     public Retorno listarJugadoresPorCedulaDescendente() {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+        ret.valorString = abbJugador.listarJugadoresPorCedulaDescendenteAbb();
+        return ret;
     }
 
     @Override
     public Retorno listarJugadoresPorTipo(TipoJugador unTipo) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+        if(unTipo != null){
+            ret.valorString = abbJugador.listarJugadoresPorTipoAbb(unTipo);
+        } else {
+            return Retorno.error1("No se indica tipo de jugador");
+        }
+        return ret;
     }
 
     @Override
