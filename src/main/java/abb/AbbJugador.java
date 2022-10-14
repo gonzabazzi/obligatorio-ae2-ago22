@@ -22,9 +22,9 @@ public class AbbJugador {
         this.raiz = raiz;
     }
 
-    public String insertarJugador(String ci, String nombre,int edad, String escuela, TipoJugador tipo){
-
-        if(!validarCampos(ci, nombre, edad, escuela, tipo)){
+    public String insertarJugador(Jugador aAgregar){
+        String ci = aAgregar.getCedula();
+        if(!validarCampos(ci, aAgregar.getNombre(), aAgregar.getEdad(), aAgregar.getEscuela(), aAgregar.getTipoJugador())){
             return "1";
         }
         if(!Jugador.validarCi(ci)) {
@@ -33,8 +33,7 @@ public class AbbJugador {
         if(this.buscarJugador(ci) != null){
             return "3";
         }
-        Jugador nuevoJugador = new Jugador(ci, nombre, edad, escuela, tipo);
-        NodoAbbJugador nodoAbbJugador = new NodoAbbJugador(nuevoJugador);
+        NodoAbbJugador nodoAbbJugador = new NodoAbbJugador(aAgregar);
         if(raiz == null){
             raiz = nodoAbbJugador;
         } else {
@@ -64,6 +63,7 @@ public class AbbJugador {
         cantIteraciones = 0;
         return buscarJugador(raiz, ci);
     }
+
     private NodoAbbJugador buscarJugador(NodoAbbJugador nodo, String ci){
         cantIteraciones ++;
         if(nodo == null){
@@ -82,6 +82,7 @@ public class AbbJugador {
     public String listarJugadoresPorCedulaAscendenteAbb(){
         return listarJugadoresPorCedulaAscendenteAbb(raiz);
     }
+
     public String listarJugadoresPorCedulaAscendenteAbb(NodoAbbJugador nodo){
         if(nodo == null){
             return "";
@@ -100,6 +101,7 @@ public class AbbJugador {
     public String listarJugadoresPorCedulaDescendenteAbb(){
         return listarJugadoresPorCedulaDescendenteAbb(raiz);
     }
+
     public String listarJugadoresPorCedulaDescendenteAbb(NodoAbbJugador nodo){
         if(nodo == null){
             return "";
@@ -115,33 +117,11 @@ public class AbbJugador {
         }
     }
 
-    public String listarJugadoresPorTipoAbb(TipoJugador tipoJugador){
-        return listarJugadoresPorTipoAbb(raiz, tipoJugador);
-    }
-    public String listarJugadoresPorTipoAbb(NodoAbbJugador nodo, TipoJugador tipoJugador){
-        if(nodo == null){
-            return "";
-        } else {
-            String izq = listarJugadoresPorTipoAbb(nodo.getIzq(), tipoJugador);
-            String stringNodo = "";
-            if(nodo.getJugador().getTipoJugador().equals(tipoJugador)) {
-                stringNodo = nodo.getJugador().getCedula() + ";" +
-                        nodo.getJugador().getNombre() + ";" +
-                        nodo.getJugador().getEdad() + ";" +
-                        nodo.getJugador().getEscuela() + ";" +
-                        nodo.getJugador().getTipoJugador() + "|";
-            }
-            String der = listarJugadoresPorTipoAbb(nodo.getDer(), tipoJugador);
-            return der + stringNodo + izq;
-        }
-    }
-
     public int formatearCi (String ci){
         return Integer.parseInt(ci.replace(".","").replace("-",""));
     }
+
     public boolean validarCampos (String ci, String nombre,int edad, String escuela, TipoJugador tipo){
         return (ci != "" && nombre != "" && edad > 0 && escuela != "" && tipo != null);
     }
-
-
 }

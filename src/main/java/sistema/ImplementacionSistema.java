@@ -8,12 +8,18 @@ import interfaz.EstadoCamino;
 import interfaz.Retorno;
 import interfaz.Sistema;
 import interfaz.TipoJugador;
+import lista.Lista;
+import lista.ListaImp;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ImplementacionSistema implements Sistema {
-
     AbbJugador abbJugador;
     Jugador jugador;
 
+    // Creo HashMap vacio y le indico tipo de clave y valor
+    HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
 
     @Override
     public Retorno inicializarSistema(int maxCentros) {
@@ -37,7 +43,8 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String ci, String nombre,int edad, String escuela, TipoJugador tipo) {
-        String retorno = abbJugador.insertarJugador(ci, nombre, edad, escuela, tipo);
+        Jugador aAgregar = new Jugador(ci, nombre, edad, escuela, tipo);
+        String retorno = abbJugador.insertarJugador(aAgregar);
         if (retorno == "1"){
             return Retorno.error1("Los campos no pueden estar vacíos");
         } else if (retorno == "2") {
@@ -45,6 +52,7 @@ public class ImplementacionSistema implements Sistema {
         } else if (retorno == "3") {
             return Retorno.error3("Ya existe un jugador registrado con esa CI");
         } else {
+            agregarJugadorPorTipo(aAgregar);
             return Retorno.ok("El jugador fue registrado exitosamente");
         }
     }
@@ -56,7 +64,6 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno buscarJugador(String ci) {
-
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
 
         if(jugador.validarCi(ci)){
@@ -96,7 +103,15 @@ public class ImplementacionSistema implements Sistema {
     public Retorno listarJugadoresPorTipo(TipoJugador unTipo) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
         if(unTipo != null){
-            ret.valorString = abbJugador.listarJugadoresPorTipoAbb(unTipo);
+            Lista<Jugador> jugadoresPorTipo = obtenerJugadorPorTipo(unTipo);
+            for (Jugador j : jugadoresPorTipo) {
+                ret.valorString = ret.valorString +
+                        j.getCedula() + ";" +
+                        j.getNombre() + ";" +
+                        j.getEdad() + ";" +
+                        j.getEscuela() + ";" +
+                        j.getTipoJugador() + "|";
+            }
         } else {
             return Retorno.error1("No se indica tipo de jugador");
         }
@@ -131,5 +146,20 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno viajeCostoMinimoMonedas(String codigoCentroOrigen, String codigoCentroDestino) {
         return Retorno.noImplementada();
+    }
+
+    //Función auxiliar para agregar jugadores por tipo
+    public void agregarJugadorPorTipo(Jugador aAgregar) {
+        int claveTipoJugador = aAgregar.getTipoJugador().getIndice(); // Para el jugador que deseo agregar obtengo su tipo y de su tipo el indice
+        Lista<Jugador> listaTipo = jugadoresPorTipo.get(claveTipoJugador); // Obtengo los jugadores del hashmap que tienen el indice anterior
+        if (listaTipo == null) {
+            listaTipo = new ListaImp<>(); // Si la lista no existe la creo
+        }
+        listaTipo.insertar(aAgregar); // Infreto en la nodo lista al lugador de ese tipo
+        jugadoresPorTipo.put(claveTipoJugador, listaTipo); // Al hash le voy a agregar para esta clave, el valor que es la lista de ese tipo
+    }
+
+    public Lista<Jugador> obtenerJugadorPorTipo (TipoJugador aBuscar) {
+        return jugadoresPorTipo.get(aBuscar.getIndice());
     }
 }
