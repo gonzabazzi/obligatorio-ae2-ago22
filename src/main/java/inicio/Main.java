@@ -35,5 +35,8 @@ public class Main {
 
         System.out.println("Func 8- Listar Jugadores por Tipo:");
         System.out.println(nuevoSistema.listarJugadoresPorTipo(TipoJugador.AVANZADO).valorString);
+
+        System.out.println("Func 9- Registrar centro urbano:");
+        System.out.println(nuevoSistema.registrarCentroUrbano("1", "Primer centro"));
     }
 }
