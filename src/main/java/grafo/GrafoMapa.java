@@ -6,19 +6,18 @@ import dominio.CentroUrbano;
 import lista.Lista;
 import lista.ListaImp;
 
-public class GrafoCentroUrbano {
+public class GrafoMapa {
     private final int tope;
     private int cantidad;
-    private String[] vertices;
+
     private Camino[][] matAdy;
     private CentroUrbano [] centros;
 
-    public GrafoCentroUrbano(int unTope, boolean esDirigido) {
+    public GrafoMapa(int unTope, boolean esDirigido) {
         this.tope = unTope;
         this.cantidad = 0;
-        this.vertices = new String[unTope];
         this.matAdy = new Camino[unTope][unTope];
-        //this.centros = new CentroUrbano[tope];
+        this.centros = new CentroUrbano[unTope];
 
         if (esDirigido) { // Inicializamos toda la matriz
             for (int i = 0; i < this.tope; i++) {
@@ -46,31 +45,25 @@ public class GrafoCentroUrbano {
 
     private int obtenerPosLibre () {
         for (int i = 0; i < this.tope; i++) {
-            if (this.vertices[i] == null) {
+            if (this.centros[i] == null) {
                 return i;
             }
         }
         return -1;
     }
 
-    private int obtenerPos (String vert) {
+    private int obtenerPos (String codigo) {
         for (int i = 0; i < this.tope; i++) {
-            if (this.vertices[i] != null && this.vertices[i].equals(vert)) {
+            if (this.centros[i] != null && this.centros[i].getCodigo().equals(codigo)) {
                 return i;
             }
         }
         return -1;
-    }
-
-    private void agregarVertice (String vert) {
-        int pos = obtenerPos(vert);
-        this.vertices[pos] = vert;
-        cantidad++;
     }
 
     private void borrarVertice (String vert) {
         int posABorrar = obtenerPos(vert);
-        vertices[posABorrar] = null;
+        centros[posABorrar] = null;
         for (int k = 0; k < tope; k++) {
             this.matAdy[posABorrar][k].setExiste(false);
             this.matAdy[k][posABorrar].setExiste(false);
@@ -101,12 +94,12 @@ public class GrafoCentroUrbano {
         matAdy[posOrigen][posDestino].setExiste(false);
     }
 
-    public Lista<String> verticesAdyacentes(String vert) { // Filas
+/*    public Lista<String> verticesAdyacentes(String vert) { // Filas
         Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
         for (int i = 0; i < tope; i++) {
             if (this.matAdy[pos][i].isExiste()) {
-                retorno.insertar(vertices[i]);
+                retorno.insertar(centros[i]);
             }
         }
         return retorno;
@@ -117,11 +110,11 @@ public class GrafoCentroUrbano {
         int pos = obtenerPos(vert);
         for (int i = 0; i < tope; i++) {
             if (this.matAdy[i][pos].isExiste()) {
-                retorno.insertar(vertices[i]);
+                retorno.insertar(centros[i]);
             }
         }
         return retorno;
-    }
+    }*/
 
     public String insertarCentroUrbano(CentroUrbano aAgregar) {
         if (this.esLleno()) {
@@ -139,6 +132,7 @@ public class GrafoCentroUrbano {
     }
 
     private boolean existeCentro(CentroUrbano centro) {
+
         return obtenerPos(centro.getCodigo()) > - 1;
     }
 

@@ -4,7 +4,7 @@ import abb.AbbJugador;
 import abb.NodoAbbJugador;
 import dominio.CentroUrbano;
 import dominio.Jugador;
-import grafo.GrafoCentroUrbano;
+import grafo.GrafoMapa;
 import interfaz.Consulta;
 import interfaz.EstadoCamino;
 import interfaz.Retorno;
@@ -13,13 +13,12 @@ import interfaz.TipoJugador;
 import lista.Lista;
 import lista.ListaImp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ImplementacionSistema implements Sistema {
     AbbJugador abbJugador;
     Jugador jugador;
-    GrafoCentroUrbano centroUrbano;
+    GrafoMapa mapa;
 
     // Creo HashMap vacio y le indico tipo de clave y valor
     HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
@@ -29,7 +28,7 @@ public class ImplementacionSistema implements Sistema {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
         if (maxCentros > 5) {
             abbJugador = new AbbJugador();
-            centroUrbano = new GrafoCentroUrbano(maxCentros, true);
+            mapa = new GrafoMapa(maxCentros, true);
             //matrizAsientos = new MatrizAsientos();
         } else {
             return Retorno.error1("La cantidad de centros debe ser mayor a 5.");
@@ -122,7 +121,7 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno registrarCentroUrbano(String codigo, String nombre) {
         CentroUrbano aAgregar = new CentroUrbano(codigo, nombre);
-        String retorno = centroUrbano.insertarCentroUrbano(aAgregar);
+        String retorno = mapa.insertarCentroUrbano(aAgregar);
         if (retorno == "1"){
             return Retorno.error1("Máximo de registro alcanzado");
         } else if (retorno == "2") {

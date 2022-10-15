@@ -37,6 +37,15 @@ public class Main {
         System.out.println(nuevoSistema.listarJugadoresPorTipo(TipoJugador.AVANZADO).valorString);
 
         System.out.println("Func 9- Registrar centro urbano:");
-        System.out.println(nuevoSistema.registrarCentroUrbano("1", "Primer centro"));
+        System.out.println(nuevoSistema.registrarCentroUrbano("1", "Primer centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("", "Primer centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("2", "").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("1", "Primer centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("2", "Segundo centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("3", "Tercero centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("4", "Cuarto centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("5", "Quinto centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("6", "Sexto centro").valorString);
+        System.out.println(nuevoSistema.registrarCentroUrbano("7", "Septimo centro").valorString);
     }
 }
