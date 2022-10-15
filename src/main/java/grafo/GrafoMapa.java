@@ -3,32 +3,33 @@ package grafo;
 //import cola.Cola;
 //import cola.ColaImp;
 import dominio.CentroUrbano;
+import dominio.Camino;
+import dominio.Recorrido;
 import lista.Lista;
 import lista.ListaImp;
 
 public class GrafoMapa {
     private final int tope;
     private int cantidad;
-
-    private Camino[][] matAdy;
+    private Recorrido[][] matAdy;
     private CentroUrbano [] centros;
 
     public GrafoMapa(int unTope, boolean esDirigido) {
         this.tope = unTope;
         this.cantidad = 0;
-        this.matAdy = new Camino[unTope][unTope];
+        this.matAdy = new Recorrido[unTope][unTope];
         this.centros = new CentroUrbano[unTope];
 
         if (esDirigido) { // Inicializamos toda la matriz
             for (int i = 0; i < this.tope; i++) {
                 for (int j = 0; j < this.tope; j++) {
-                    this.matAdy[i][j] = new Camino();
+                    this.matAdy[i][j] = new Recorrido();
                 }
             }
         } else { // Dada la diagonal recorro tiangulo superior
             for (int i = 0; i < this.tope; i++) {
                 for (int j = i; j < this.tope; j++) {
-                    this.matAdy[i][j] = new Camino(); // Pongo un objeto en esa posicion
+                    this.matAdy[i][j] = new Recorrido(); // Pongo un objeto en esa posicion
                     this.matAdy[j][i] = this.matAdy[i][j]; // Y en su espejo del otro triángulo, para que quede no dirigido
                 }
             }
@@ -75,14 +76,14 @@ public class GrafoMapa {
         return obtenerPos(vert) != -1;
     }
 
-    private void agregarArista (String origen, String destino, int peso) {
+/*    private void agregarArista (String origen, String destino, int peso) {
         int posOrigen = obtenerPos(origen);
         int posDestino = obtenerPos(destino);
         matAdy[posOrigen][posDestino].setExiste(true);
         matAdy[posOrigen][posDestino].setPeso(peso);
-    }
+    }*/
 
-    private boolean existeArista (String origen, String destino) {
+    private boolean existeCamino (String origen, String destino) {
         int posOrigen = obtenerPos(origen);
         int posDestino = obtenerPos(destino);
         return matAdy[posOrigen][posDestino].isExiste();
@@ -121,7 +122,7 @@ public class GrafoMapa {
             return "1";
         } else if (aAgregar.getCodigo() == null || aAgregar.getNombre() == null || aAgregar.getCodigo() == "" || aAgregar.getNombre() == "") {
             return "2";
-        } else if (existeCentro(aAgregar)) {
+        } else if (existeCentro(aAgregar.getCodigo())) {
             return "3";
         } else {
             int posicionLibre = obtenerPosLibre();
@@ -131,9 +132,27 @@ public class GrafoMapa {
         }
     }
 
-    private boolean existeCentro(CentroUrbano centro) {
+    private boolean existeCentro(String codigoCentro) {
 
-        return obtenerPos(centro.getCodigo()) > - 1;
+        return obtenerPos(codigoCentro) > - 1;
+    }
+
+    public String insertarCamino(Camino aAgregar) {
+        if (aAgregar.getCosto() <= 0 || aAgregar.getTiempo() <= 0 || aAgregar.getKilometros() <= 0) {
+            return "1";
+        } else if (aAgregar.getCodigoCentroOrigen() == null || aAgregar.getCodigoCentroDestino() == null || aAgregar.getEstadoCamino() == null || aAgregar.getCodigoCentroOrigen() == "" || aAgregar.getCodigoCentroDestino() == "") {
+            return "2";
+        } else if (!existeCentro(aAgregar.getCodigoCentroOrigen())) {
+            return "3";
+        } else if (!existeCentro(aAgregar.getCodigoCentroDestino())) {
+            return "4";
+        } else if (existeCamino(aAgregar.getCodigoCentroOrigen(), aAgregar.getCodigoCentroDestino())) {
+            return "5";
+        } else {
+            matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].setExiste(true);
+            matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].agregarCamioALista(aAgregar);
+            return "Ok";
+        }
     }
 
 //    public void dfs(String vert) {

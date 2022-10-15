@@ -1,5 +1,6 @@
 package inicio;
 
+import interfaz.EstadoCamino;
 import interfaz.TipoJugador;
 import sistema.ImplementacionSistema;
 
@@ -47,5 +48,19 @@ public class Main {
         System.out.println(nuevoSistema.registrarCentroUrbano("5", "Quinto centro").valorString);
         System.out.println(nuevoSistema.registrarCentroUrbano("6", "Sexto centro").valorString);
         System.out.println(nuevoSistema.registrarCentroUrbano("7", "Septimo centro").valorString);
+
+        System.out.println("Func 10- Registrar camino:");
+        System.out.println(nuevoSistema.registrarCamino("1", "2", 2.5, 4.0, 200, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("", "2", 2.5, 4.0, 200, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "", 2.5, 4.0, 200, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "2", 2.5, 4.0, 200, null).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "2", 0, 4.0, 200, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "2", 2.5, 0, 200, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "2", 2.5, 4.0, 0, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "2", 2.5, 4.0, 200, EstadoCamino.BUENO).valorString);
+        System.out.println(nuevoSistema.registrarCamino("2", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("2", "1", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("3", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("2", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
     }
 }

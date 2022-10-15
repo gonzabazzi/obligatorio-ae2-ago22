@@ -9,14 +9,16 @@ public class Camino {
     private double tiempo;
     private double kilometros;
     private EstadoCamino estadoCamino;
+    private boolean existe;
 
-    public Camino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estado) {
+    public Camino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoCamino) {
         this.codigoCentroOrigen = codigoCentroOrigen;
         this.codigoCentroDestino = codigoCentroDestino;
         this.costo = costo;
         this.tiempo = tiempo;
         this.kilometros = kilometros;
         this.estadoCamino = estadoCamino;
+        this.existe = true;
     }
 
     public String getCodigoCentroOrigen() {
@@ -66,4 +68,13 @@ public class Camino {
     public void setEstado(EstadoCamino estadoCamino) {
         this.estadoCamino = estadoCamino;
     }
+
+    public boolean isExiste() {
+        return existe;
+    }
+
+    public void setExiste(boolean existe) {
+        this.existe = existe;
+    }
+
 }

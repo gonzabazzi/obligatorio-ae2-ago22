@@ -3,6 +3,7 @@ package sistema;
 import abb.AbbJugador;
 import abb.NodoAbbJugador;
 import dominio.CentroUrbano;
+import dominio.Camino;
 import dominio.Jugador;
 import grafo.GrafoMapa;
 import interfaz.Consulta;
@@ -13,12 +14,14 @@ import interfaz.TipoJugador;
 import lista.Lista;
 import lista.ListaImp;
 
+
 import java.util.HashMap;
 
 public class ImplementacionSistema implements Sistema {
     AbbJugador abbJugador;
     Jugador jugador;
     GrafoMapa mapa;
+
 
     // Creo HashMap vacio y le indico tipo de clave y valor
     HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
@@ -135,7 +138,21 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarCamino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
-        return Retorno.noImplementada();
+        Camino aAgregar = new Camino(codigoCentroOrigen, codigoCentroDestino, costo, tiempo, kilometros, estadoDelCamino);
+        String retorno = mapa.insertarCamino(aAgregar);
+        if (retorno == "1"){
+            return Retorno.error1("Costo, tiempo y kilometros deben ser mayores a 0");
+        } else if (retorno == "2") {
+            return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no no pueden ser vacios");
+        } else if (retorno == "3") {
+            return Retorno.error3("El centro de origen no existe");
+        } else if (retorno == "4") {
+            return Retorno.error3("El centro de destino no existe");
+        } else if (retorno == "5") {
+        return Retorno.error3("Ya existe camino");
+        }else {
+            return Retorno.ok("El camino fue registrado exitosamente");
+        }
     }
 
     @Override
