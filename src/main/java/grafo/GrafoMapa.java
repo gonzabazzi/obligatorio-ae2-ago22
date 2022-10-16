@@ -146,7 +146,7 @@ public class GrafoMapa {
             return "3";
         } else if (!existeCentro(aAgregar.getCodigoCentroDestino())) {
             return "4";
-        } else if (existeCamino(aAgregar.getCodigoCentroOrigen(), aAgregar.getCodigoCentroDestino())) {
+        } else if (existeCamino(aAgregar.getCodigoCentroOrigen(), aAgregar.getCodigoCentroDestino()) || existeCamino(aAgregar.getCodigoCentroDestino(), aAgregar.getCodigoCentroOrigen())  ) {
             return "5";
         } else {
             matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].setExiste(true);

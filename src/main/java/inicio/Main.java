@@ -62,5 +62,6 @@ public class Main {
         System.out.println(nuevoSistema.registrarCamino("2", "1", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
         System.out.println(nuevoSistema.registrarCamino("3", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
         System.out.println(nuevoSistema.registrarCamino("2", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("4", "2", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
     }
 }
