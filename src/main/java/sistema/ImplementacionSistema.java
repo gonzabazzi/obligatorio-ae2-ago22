@@ -143,7 +143,7 @@ public class ImplementacionSistema implements Sistema {
         if (retorno == "1"){
             return Retorno.error1("Costo, tiempo y kilometros deben ser mayores a 0");
         } else if (retorno == "2") {
-            return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no no pueden ser vacios");
+            return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no pueden ser vacios");
         } else if (retorno == "3") {
             return Retorno.error3("El centro de origen no existe");
         } else if (retorno == "4") {
@@ -157,7 +157,20 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno actualizarCamino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
-        return Retorno.noImplementada();
+        String retorno = mapa.actualizarCamino(codigoCentroOrigen, codigoCentroDestino, costo, tiempo, kilometros, estadoDelCamino);
+        if (retorno == "1"){
+            return Retorno.error1("Costo, tiempo y kilometros deben ser mayores a 0");
+        } else if (retorno == "2") {
+            return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no pueden ser vacios");
+        } else if (retorno == "3") {
+            return Retorno.error3("El centro de origen no existe");
+        } else if (retorno == "4") {
+            return Retorno.error3("El centro de destino no existe");
+        } else if (retorno == "5") {
+            return Retorno.error3("No existe un camino entre origen y destino");
+        }else {
+            return Retorno.ok("El camino fue actualizado exitosamente");
+        }
     }
 
     @Override

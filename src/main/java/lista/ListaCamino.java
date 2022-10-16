@@ -55,16 +55,16 @@ public class ListaCamino implements Lista<Camino> {
         return false;
     }*/
 
-/*    public NodoListaVuelo buscarVueloPorCodigo(String codigoVuelo){
-        NodoListaVuelo vuelo = inicio;
-        while (vuelo != null){
-            if(vuelo.getVuelo().getCodigoDeVuelo().equals(codigoVuelo)){
-                return vuelo;
+    public NodoCamino buscarCamino (String origen, String destino){
+        NodoCamino camino = inicio;
+        while (camino != null){
+            if(camino.getCamino().getCodigoCentroOrigen().equals(origen) && camino.getCamino().getCodigoCentroDestino().equals(destino)){
+                return camino;
             }
-            vuelo = vuelo.getSig();
+            camino = camino.getSig();
         }
         return null;
-    }*/
+    }
 
 /*    public int buscarVueloMasBarato(){
 *//*        NodoListaVuelo vuelo = inicio;

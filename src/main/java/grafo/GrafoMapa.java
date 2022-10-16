@@ -5,8 +5,7 @@ package grafo;
 import dominio.CentroUrbano;
 import dominio.Camino;
 import dominio.Recorrido;
-import lista.Lista;
-import lista.ListaImp;
+import interfaz.EstadoCamino;
 
 public class GrafoMapa {
     private final int tope;
@@ -150,8 +149,29 @@ public class GrafoMapa {
             return "5";
         } else {
             matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].setExiste(true);
-            matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].agregarCamioALista(aAgregar);
+            matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].agregarCaminoALista(aAgregar);
             return "Ok";
+        }
+    }
+
+    public String actualizarCamino (String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
+        if (costo <= 0 || tiempo <= 0 || kilometros <= 0) {
+            return "1";
+        } else if (codigoCentroOrigen == null || codigoCentroDestino == null || estadoDelCamino == null || codigoCentroOrigen == "" || codigoCentroDestino == "") {
+            return "2";
+        } else if (!existeCentro(codigoCentroOrigen)) {
+            return "3";
+        } else if (!existeCentro(codigoCentroDestino)) {
+            return "4";
+        } else if (!existeCamino(codigoCentroOrigen, codigoCentroDestino)) {
+            return "5";
+        } else {
+            boolean modifcado = matAdy[obtenerPos(codigoCentroOrigen)][obtenerPos(codigoCentroDestino)].modificarCamino(codigoCentroOrigen, codigoCentroDestino, costo, tiempo, kilometros, estadoDelCamino);
+            if (modifcado)  {
+                return "Ok";
+            } else {
+                return "5";
+            }
         }
     }
 
