@@ -145,9 +145,9 @@ public class ImplementacionSistema implements Sistema {
         } else if (retorno == "2") {
             return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no pueden ser vacios");
         } else if (retorno == "3") {
-            return Retorno.error3("El centro de origen no existe");
+            return Retorno.error4("El centro de origen no existe");
         } else if (retorno == "4") {
-            return Retorno.error3("El centro de destino no existe");
+            return Retorno.error5("El centro de destino no existe");
         } else if (retorno == "5") {
         return Retorno.error3("Ya existe camino");
         }else {
@@ -165,9 +165,9 @@ public class ImplementacionSistema implements Sistema {
         } else if (retorno == "3") {
             return Retorno.error3("El centro de origen no existe");
         } else if (retorno == "4") {
-            return Retorno.error3("El centro de destino no existe");
+            return Retorno.error4("El centro de destino no existe");
         } else if (retorno == "5") {
-            return Retorno.error3("No existe un camino entre origen y destino");
+            return Retorno.error5("No existe un camino entre origen y destino");
         }else {
             return Retorno.ok("El camino fue actualizado exitosamente");
         }
