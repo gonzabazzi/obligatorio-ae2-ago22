@@ -7,6 +7,8 @@ import dominio.Camino;
 import dominio.Recorrido;
 import interfaz.EstadoCamino;
 
+import java.util.Objects;
+
 public class GrafoMapa {
     private final int tope;
     private int cantidad;
@@ -119,7 +121,7 @@ public class GrafoMapa {
     public String insertarCentroUrbano(CentroUrbano aAgregar) {
         if (this.esLleno()) {
             return "1";
-        } else if (aAgregar.getCodigo() == null || aAgregar.getNombre() == null || aAgregar.getCodigo() == "" || aAgregar.getNombre() == "") {
+        } else if (aAgregar.getCodigo() == null || aAgregar.getNombre() == null || Objects.equals(aAgregar.getCodigo(), "") || Objects.equals(aAgregar.getNombre(), "")) {
             return "2";
         } else if (existeCentro(aAgregar.getCodigo())) {
             return "3";
@@ -139,7 +141,7 @@ public class GrafoMapa {
     public String insertarCamino(Camino aAgregar) {
         if (aAgregar.getCosto() <= 0 || aAgregar.getTiempo() <= 0 || aAgregar.getKilometros() <= 0) {
             return "1";
-        } else if (aAgregar.getCodigoCentroOrigen() == null || aAgregar.getCodigoCentroDestino() == null || aAgregar.getEstadoCamino() == null || aAgregar.getCodigoCentroOrigen() == "" || aAgregar.getCodigoCentroDestino() == "") {
+        } else if (aAgregar.getCodigoCentroOrigen() == null || aAgregar.getCodigoCentroDestino() == null || aAgregar.getEstadoCamino() == null || aAgregar.getCodigoCentroOrigen().equals("") || aAgregar.getCodigoCentroDestino().equals("")) {
             return "2";
         } else if (!existeCentro(aAgregar.getCodigoCentroOrigen())) {
             return "3";
@@ -157,7 +159,7 @@ public class GrafoMapa {
     public String actualizarCamino (String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
         if (costo <= 0 || tiempo <= 0 || kilometros <= 0) {
             return "1";
-        } else if (codigoCentroOrigen == null || codigoCentroDestino == null || estadoDelCamino == null || codigoCentroOrigen == "" || codigoCentroDestino == "") {
+        } else if (codigoCentroOrigen == null || codigoCentroDestino == null || estadoDelCamino == null || codigoCentroOrigen.equals("") || codigoCentroDestino.equals("")) {
             return "2";
         } else if (!existeCentro(codigoCentroOrigen)) {
             return "3";

@@ -16,6 +16,7 @@ import lista.ListaImp;
 
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class ImplementacionSistema implements Sistema {
     AbbJugador abbJugador;
@@ -48,11 +49,11 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarJugador(String ci, String nombre,int edad, String escuela, TipoJugador tipo) {
         Jugador aAgregar = new Jugador(ci, nombre, edad, escuela, tipo);
         String retorno = abbJugador.insertarJugador(aAgregar);
-        if (retorno == "1"){
+        if (Objects.equals(retorno, "1")){
             return Retorno.error1("Los campos no pueden estar vacíos");
-        } else if (retorno == "2") {
+        } else if (Objects.equals(retorno, "2")) {
             return Retorno.error2("El formato de la CI no es válido");
-        } else if (retorno == "3") {
+        } else if (Objects.equals(retorno, "3")) {
             return Retorno.error3("Ya existe un jugador registrado con esa CI");
         } else {
             agregarJugadorPorTipo(aAgregar);
@@ -62,23 +63,27 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno filtrarJugadores(Consulta consulta) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+
+        String jugadoresFiltrados = abbJugador.filtrarJugadores(consulta);
+
+        return ret;
     }
 
     @Override
     public Retorno buscarJugador(String ci) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
 
-        if(jugador.validarCi(ci)){
-            NodoAbbJugador jugadorEncontrado = abbJugador.buscarJugador(ci);
+        if(Jugador.validarCi(ci)){
+            Jugador jugadorEncontrado = abbJugador.buscarJugador(ci);
             if(jugadorEncontrado != null){
                 ret.valorInteger = abbJugador.cantIteraciones;
                 ret.valorString =
                         ci + ";" +
-                        jugadorEncontrado.getJugador().getNombre() + ";" +
-                        jugadorEncontrado.getJugador().getEdad() + ";" +
-                        jugadorEncontrado.getJugador().getEscuela() + ";" +
-                        jugadorEncontrado.getJugador().getTipoJugador();
+                        jugadorEncontrado.getNombre() + ";" +
+                        jugadorEncontrado.getEdad() + ";" +
+                        jugadorEncontrado.getEscuela() + ";" +
+                        jugadorEncontrado.getTipoJugador().getValor();
                 return ret;
             }else{
                 return Retorno.error2("No se existe jugador con esa CI");
@@ -92,6 +97,9 @@ public class ImplementacionSistema implements Sistema {
     public Retorno listarJugadoresPorCedulaAscendente() {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
         ret.valorString = abbJugador.listarJugadoresPorCedulaAscendenteAbb();
+        if(!Objects.equals(ret.valorString, "")) {
+            ret.valorString = ret.valorString.substring(0, ret.valorString.length() - 1);
+        }
         return ret;
     }
 
@@ -99,6 +107,9 @@ public class ImplementacionSistema implements Sistema {
     public Retorno listarJugadoresPorCedulaDescendente() {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
         ret.valorString = abbJugador.listarJugadoresPorCedulaDescendenteAbb();
+        if(!Objects.equals(ret.valorString, "")) {
+            ret.valorString = ret.valorString.substring(0, ret.valorString.length() - 1);
+        }
         return ret;
     }
 
@@ -107,13 +118,18 @@ public class ImplementacionSistema implements Sistema {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
         if(unTipo != null){
             Lista<Jugador> jugadoresPorTipo = obtenerJugadorPorTipo(unTipo);
-            for (Jugador j : jugadoresPorTipo) {
-                ret.valorString = ret.valorString +
-                        j.getCedula() + ";" +
-                        j.getNombre() + ";" +
-                        j.getEdad() + ";" +
-                        j.getEscuela() + ";" +
-                        j.getTipoJugador() + "|";
+            if(jugadoresPorTipo != null){
+                for (Jugador j : jugadoresPorTipo) {
+                    ret.valorString = ret.valorString +
+                            j.getCedula() + ";" +
+                            j.getNombre() + ";" +
+                            j.getEdad() + ";" +
+                            j.getEscuela() + ";" +
+                            j.getTipoJugador().getValor() + "|";
+                }
+                ret.valorString = ret.valorString.substring(0, ret.valorString.length() - 1);
+            } else {
+                ret.valorString = "";
             }
         } else {
             return Retorno.error1("No se indica tipo de jugador");
@@ -125,11 +141,11 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarCentroUrbano(String codigo, String nombre) {
         CentroUrbano aAgregar = new CentroUrbano(codigo, nombre);
         String retorno = mapa.insertarCentroUrbano(aAgregar);
-        if (retorno == "1"){
+        if (Objects.equals(retorno, "1")){
             return Retorno.error1("Máximo de registro alcanzado");
-        } else if (retorno == "2") {
+        } else if (Objects.equals(retorno, "2")) {
             return Retorno.error2("Los datos no pueden ser vacíos");
-        } else if (retorno == "3") {
+        } else if (Objects.equals(retorno, "3")) {
             return Retorno.error3("Ya existe un centro urbano registrado con ese código");
         } else {
             return Retorno.ok("El centro urbano fue registrado exitosamente");
@@ -145,11 +161,11 @@ public class ImplementacionSistema implements Sistema {
         } else if (retorno == "2") {
             return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no pueden ser vacios");
         } else if (retorno == "3") {
-            return Retorno.error4("El centro de origen no existe");
+            return Retorno.error3("El centro de origen no existe");
         } else if (retorno == "4") {
-            return Retorno.error5("El centro de destino no existe");
+            return Retorno.error4("El centro de destino no existe");
         } else if (retorno == "5") {
-        return Retorno.error3("Ya existe camino");
+        return Retorno.error5("Ya existe camino entre origen y destino");
         }else {
             return Retorno.ok("El camino fue registrado exitosamente");
         }
@@ -195,7 +211,7 @@ public class ImplementacionSistema implements Sistema {
         if (listaTipo == null) {
             listaTipo = new ListaImp<>(); // Si la lista no existe la creo
         }
-        listaTipo.insertar(aAgregar); // Infreto en la nodo lista al lugador de ese tipo
+        listaTipo.insertar(aAgregar); // Infreto en el nodo lista al lugador de ese tipo
         jugadoresPorTipo.put(claveTipoJugador, listaTipo); // Al hash le voy a agregar para esta clave, el valor que es la lista de ese tipo
     }
 

@@ -1,6 +1,7 @@
 package abb;
 
 import dominio.Jugador;
+import interfaz.Consulta;
 import interfaz.Retorno;
 import interfaz.TipoJugador;
 
@@ -59,17 +60,17 @@ public class AbbJugador {
         return raiz;
     }
 
-    public NodoAbbJugador buscarJugador(String ci){
-        cantIteraciones = 0;
+    public Jugador buscarJugador(String ci){
+        cantIteraciones = -1; //ToDo ¿ESTO NO DEBERÍA ARRANCAR POR LO MENOS CON UNA ITERACIÓN SIEMPRE????
         return buscarJugador(raiz, ci);
     }
 
-    private NodoAbbJugador buscarJugador(NodoAbbJugador nodo, String ci){
+    private Jugador buscarJugador(NodoAbbJugador nodo, String ci){
         cantIteraciones ++;
         if(nodo == null){
             return null;
         } else if(nodo.getJugador().getCedula().equals(ci)) {
-            return nodo;
+            return nodo.getJugador();
         }else{
             if(formatearCi(nodo.getJugador().getCedula()) > formatearCi(ci)){
                 return buscarJugador(nodo.getIzq(), ci);
@@ -92,7 +93,7 @@ public class AbbJugador {
                     nodo.getJugador().getNombre() + ";" +
                     nodo.getJugador().getEdad() + ";" +
                     nodo.getJugador().getEscuela() + ";" +
-                    nodo.getJugador().getTipoJugador() + "|";
+                    nodo.getJugador().getTipoJugador().getValor() + "|";
             String der = listarJugadoresPorCedulaAscendenteAbb(nodo.getDer());
             return izq + stringNodo + der;
         }
@@ -111,7 +112,7 @@ public class AbbJugador {
                     nodo.getJugador().getNombre() + ";" +
                     nodo.getJugador().getEdad() + ";" +
                     nodo.getJugador().getEscuela() + ";" +
-                    nodo.getJugador().getTipoJugador() + "|";
+                    nodo.getJugador().getTipoJugador().getValor() + "|";
             String der = listarJugadoresPorCedulaDescendenteAbb(nodo.getDer());
             return der + stringNodo + izq;
         }
@@ -122,6 +123,11 @@ public class AbbJugador {
     }
 
     public boolean validarCampos (String ci, String nombre,int edad, String escuela, TipoJugador tipo){
-        return (ci != "" && nombre != "" && edad > 0 && escuela != "" && tipo != null);
+        return !(ci == null || ci == "" || nombre == "" || nombre == null || edad <= 0 || escuela == "" || escuela == null || tipo == null);
+    }
+
+    public String filtrarJugadores(Consulta consulta) {
+        //
+        return null;
     }
 }

@@ -63,8 +63,10 @@ public class Jugador {
     public static boolean validarCi(String ci) {
         if (ci.length() == 9) {
             return ci.matches("^[1-9]{1,1}[\\d]{2,2}\\.[\\d]{3,3}\\-[\\d]{1,1}$");
-        } else {
+        } else if(ci.length() == 11) {
             return ci.matches("^[1-9]{0,1}\\.?[0-9]{1,1}[\\d]{2,2}\\.[\\d]{3,3}\\-[\\d]{1,1}$");
+        } else {
+            return false;
         }
     }
 
