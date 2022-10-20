@@ -24,7 +24,7 @@ public class ImplementacionSistema implements Sistema {
     GrafoMapa mapa;
 
 
-    // Creo HashMap vacio y le indico tipo de clave y valor
+    // Creo HashMap vacío y le indico tipo de clave y valor
     HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
 
     @Override
