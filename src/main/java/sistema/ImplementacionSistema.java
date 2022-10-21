@@ -22,7 +22,7 @@ public class ImplementacionSistema implements Sistema {
     AbbJugador abbJugador;
     Jugador jugador;
     GrafoMapa mapa;
-    //test commits
+
     // Creo HashMap vacío y le indico tipo de clave y valor
     HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
 
