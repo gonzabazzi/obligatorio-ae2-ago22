@@ -380,22 +380,24 @@ public class Consulta {
         }else{
             boolean der = cumpleConsultaRec(jugador, consulta, nodo.getDer());
             switch (nodo.getTipoNodoConsulta().valorStr){
-                case "AND":
+             /*   case "AND":
+                    return true;
 
                 case "OR":
+                    return true;*/
 
                 case "edad":
-                    if(jugador.getEdad()>Integer.parseInt(nodo.getTipoNodoConsulta().valorStr)){
+                    if(jugador.getEdad() > Integer.valueOf(nodo.valorInt)){
                         return true;
                     }
 
                 case "nombre":
-                    if(jugador.getNombre()==nodo.getTipoNodoConsulta().valorStr){
+                    if(jugador.getNombre().equals(nodo.valorString)){
                         return true;
                     }
 
                 case "escuela":
-                    if(jugador.getEscuela()==nodo.getTipoNodoConsulta().valorStr){
+                    if(jugador.getEscuela().equals(nodo.valorString)){
                      return true;
                     }
             }
