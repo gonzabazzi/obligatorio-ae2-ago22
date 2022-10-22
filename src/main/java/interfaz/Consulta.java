@@ -1,5 +1,7 @@
 package interfaz;
 
+import dominio.Jugador;
+
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -365,5 +367,41 @@ public class Consulta {
 
         }
         return null;
+    }
+
+    public boolean cumpleConsulta(Jugador jugador, Consulta consulta){
+       return cumpleConsultaRec(jugador, consulta, raiz);
+    }
+
+    private boolean cumpleConsultaRec(Jugador jugador, Consulta consulta, NodoConsulta nodo){
+
+        if(nodo==null){
+            return false;
+        }else{
+            boolean der = cumpleConsultaRec(jugador, consulta, nodo.getDer());
+            switch (nodo.getTipoNodoConsulta().valorStr){
+                case "AND":
+
+                case "OR":
+
+                case "edad":
+                    if(jugador.getEdad()>Integer.parseInt(nodo.getTipoNodoConsulta().valorStr)){
+                        return true;
+                    }
+
+                case "nombre":
+                    if(jugador.getNombre()==nodo.getTipoNodoConsulta().valorStr){
+                        return true;
+                    }
+
+                case "escuela":
+                    if(jugador.getEscuela()==nodo.getTipoNodoConsulta().valorStr){
+                     return true;
+                    }
+            }
+            boolean izq = cumpleConsultaRec(jugador, consulta, nodo.getIzq());
+            return (izq==der==true);
+        }
+
     }
 }

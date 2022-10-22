@@ -8,6 +8,8 @@ import interfaz.TipoJugador;
 public class AbbJugador {
     private NodoAbbJugador raiz;
     private Jugador jugador;
+
+    private Consulta consulta;
     public int cantIteraciones;
 
     public AbbJugador(){
@@ -127,7 +129,29 @@ public class AbbJugador {
     }
 
     public String filtrarJugadores(Consulta consulta) {
-        //
-        return null;
+        //Aux Jugadores recorre la  consulta y verifica si comple no cumple
+        //En el ABB recorremos cada jugador llamando a la Aux
+
+       String jugadoresFiltrados = filtrarJugadoresRec(raiz, consulta);
+
+        return "";
     }
+
+    public String filtrarJugadoresRec(NodoAbbJugador nodo, Consulta consulta){
+        if(nodo == null){
+            return "";
+        } else {
+            String izq = filtrarJugadoresRec(nodo.getIzq(), consulta);
+            String stringNodo = "";
+            if (consulta.cumpleConsulta(nodo.getJugador(), consulta)){
+                stringNodo += nodo.getJugador().getCedula() + "|";
+            }
+            String der = filtrarJugadoresRec(nodo.getDer(), consulta);
+            return izq + stringNodo + der;
+        }
+    }
+
+
+
+
 }
