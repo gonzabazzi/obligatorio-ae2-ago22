@@ -64,9 +64,13 @@ public class ImplementacionSistema implements Sistema {
     public Retorno filtrarJugadores(Consulta consulta) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
 
-        String jugadoresFiltrados = abbJugador.filtrarJugadores(consulta);
+        ret.valorString = abbJugador.filtrarJugadores(consulta);
 
-        return ret;
+        if(!Objects.equals(ret.valorString, "")) {
+            ret.valorString = ret.valorString.substring(0, ret.valorString.length() - 1);
+        }
+
+        return ret ;
     }
 
     @Override

@@ -369,40 +369,46 @@ public class Consulta {
         return null;
     }
 
-    public boolean cumpleConsulta(Jugador jugador, Consulta consulta){
-       return cumpleConsultaRec(jugador, consulta, raiz);
+    public boolean cumpleConsulta(Jugador jugador){
+       return cumpleConsultaRec(jugador, raiz);
     }
 
-    private boolean cumpleConsultaRec(Jugador jugador, Consulta consulta, NodoConsulta nodo){
+    private boolean cumpleConsultaRec(Jugador jugador, NodoConsulta nodo){
 
         if(nodo==null){
             return false;
         }else{
-            boolean der = cumpleConsultaRec(jugador, consulta, nodo.getDer());
+            boolean der = cumpleConsultaRec(jugador, nodo.getDer());
             switch (nodo.getTipoNodoConsulta().valorStr){
-             /*   case "AND":
-                    return true;
+                case "AND":
+                return cumpleConsultaRec(jugador, nodo.getIzq());
 
                 case "OR":
-                    return true;*/
+                    if(!cumpleConsultaRec(jugador, nodo.getDer())){
+                        return cumpleConsultaRec(jugador, nodo.getIzq());
+                    }
+                    break;
 
                 case "edad":
-                    if(jugador.getEdad() > Integer.valueOf(nodo.valorInt)){
+                    if(jugador.getEdad() > nodo.valorInt){
                         return true;
                     }
+                    break;
 
                 case "nombre":
                     if(jugador.getNombre().equals(nodo.valorString)){
                         return true;
                     }
+                    break;
 
                 case "escuela":
                     if(jugador.getEscuela().equals(nodo.valorString)){
                      return true;
                     }
+                    break;
             }
-            boolean izq = cumpleConsultaRec(jugador, consulta, nodo.getIzq());
-            return (izq==der==true);
+            boolean izq = cumpleConsultaRec(jugador, nodo.getIzq());
+            return false;
         }
 
     }

@@ -134,16 +134,16 @@ public class AbbJugador {
 
        String jugadoresFiltrados = filtrarJugadoresRec(raiz, consulta);
 
-        return "";
+        return jugadoresFiltrados;
     }
 
     public String filtrarJugadoresRec(NodoAbbJugador nodo, Consulta consulta){
         if(nodo == null){
             return "";
         } else {
-            String izq = filtrarJugadoresRec(nodo.getIzq(), consulta);
             String stringNodo = "";
-            if (consulta.cumpleConsulta(nodo.getJugador(), consulta)){
+            String izq = filtrarJugadoresRec(nodo.getIzq(), consulta);
+            if (consulta.cumpleConsulta(nodo.getJugador())){
                 stringNodo += nodo.getJugador().getCedula() + "|";
             }
             String der = filtrarJugadoresRec(nodo.getDer(), consulta);

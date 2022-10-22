@@ -1,5 +1,6 @@
 package inicio;
 
+import interfaz.Consulta;
 import interfaz.EstadoCamino;
 import interfaz.TipoJugador;
 import sistema.ImplementacionSistema;
@@ -12,11 +13,16 @@ public class Main {
         nuevoSistema.inicializarSistema(6);
 
         System.out.println("Func 3- Registrar Jugador:");
-        System.out.println(nuevoSistema.registrarJugador("1.111.111-1","Nicki", 9, "Rural", TipoJugador.INICIAL).valorString);
-        System.out.println(nuevoSistema.registrarJugador("4.444.444-4","Jorge", 9, "Rural", TipoJugador.AVANZADO).valorString);
+        System.out.println(nuevoSistema.registrarJugador("1.111.111-1","Nicki", 2, "Rural", TipoJugador.INICIAL).valorString);
+        System.out.println(nuevoSistema.registrarJugador("4.444.444-4","Jorge", 16, "Rural", TipoJugador.AVANZADO).valorString);
         System.out.println(nuevoSistema.registrarJugador("3.333.333-3","Laura", 9, "Rural", TipoJugador.INICIAL).valorString);
-        System.out.println(nuevoSistema.registrarJugador("5.555.555-5","Lalo", 9, "Rural", TipoJugador.INICIAL).valorString);
+        System.out.println(nuevoSistema.registrarJugador("5.555.555-5","Lalo", 18, "Rural", TipoJugador.INICIAL).valorString);
         System.out.println(nuevoSistema.registrarJugador("2.222.222-2","Juan", 9, "Rural", TipoJugador.AVANZADO).valorString);
+
+        System.out.println("Func 4- Filtrar jugadores:");
+        System.out.println(nuevoSistema.filtrarJugadores(Consulta.fromString("edad > 15 OR escuela = 'Felipe'")).valorString);
+
+
 
         System.out.println("Func 5- Buscar jugador:");
         System.out.println(nuevoSistema.buscarJugador("8.444.444-4").valorString);
