@@ -63,7 +63,7 @@ public class AbbJugador {
     }
 
     public Jugador buscarJugador(String ci){
-        cantIteraciones = -1; //ToDo ¿ESTO NO DEBERÍA ARRANCAR POR LO MENOS CON UNA ITERACIÓN SIEMPRE????
+        cantIteraciones = -1;
         return buscarJugador(raiz, ci);
     }
 
