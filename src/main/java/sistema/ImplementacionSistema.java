@@ -32,7 +32,6 @@ public class ImplementacionSistema implements Sistema {
         if (maxCentros > 5) {
             abbJugador = new AbbJugador();
             mapa = new GrafoMapa(maxCentros, true);
-            //matrizAsientos = new MatrizAsientos();
         } else {
             return Retorno.error1("La cantidad de centros debe ser mayor a 5.");
         }
