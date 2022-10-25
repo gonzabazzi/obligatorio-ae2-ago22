@@ -373,7 +373,7 @@ public class Consulta {
        return cumpleConsultaRec(jugador, raiz);
     }
 
-    private boolean cumpleConsultaRec(Jugador jugador, NodoConsulta nodo){
+    private boolean cumpleConsultaRec(Jugador jugador, NodoConsulta nodo){ //ToDo filtrar jugadores INCOMPLETO!!!!
 
         if(nodo==null){
             return false;

@@ -2,7 +2,6 @@ package abb;
 
 import dominio.Jugador;
 import interfaz.Consulta;
-import interfaz.Retorno;
 import interfaz.TipoJugador;
 
 public class AbbJugador {
@@ -129,14 +128,8 @@ public class AbbJugador {
     }
 
     public String filtrarJugadores(Consulta consulta) {
-        //Aux Jugadores recorre la  consulta y verifica si comple no cumple
-        //En el ABB recorremos cada jugador llamando a la Aux
-
-       String jugadoresFiltrados = filtrarJugadoresRec(raiz, consulta);
-
-        return jugadoresFiltrados;
+        return filtrarJugadoresRec(raiz, consulta);
     }
-
     public String filtrarJugadoresRec(NodoAbbJugador nodo, Consulta consulta){
         if(nodo == null){
             return "";

@@ -1,7 +1,5 @@
 package grafo;
 
-//import cola.Cola;
-//import cola.ColaImp;
 import dominio.CentroUrbano;
 import dominio.Camino;
 import dominio.Recorrido;
@@ -83,12 +81,6 @@ public class GrafoMapa {
         return obtenerPos(vert) != -1;
     }
 
-/*    private void agregarArista (String origen, String destino, int peso) {
-        int posOrigen = obtenerPos(origen);
-        int posDestino = obtenerPos(destino);
-        matAdy[posOrigen][posDestino].setExiste(true);
-        matAdy[posOrigen][posDestino].setPeso(peso);
-    }*/
 
     private boolean existeCamino (String origen, String destino) {
         int posOrigen = obtenerPos(origen);
@@ -101,28 +93,6 @@ public class GrafoMapa {
         int posDestino = obtenerPos(destino);
         matAdy[posOrigen][posDestino].setExiste(false);
     }
-
-/*    public Lista<String> verticesAdyacentes(String vert) { // Filas
-        Lista<String> retorno = new ListaImp<>();
-        int pos = obtenerPos(vert);
-        for (int i = 0; i < tope; i++) {
-            if (this.matAdy[pos][i].isExiste()) {
-                retorno.insertar(centros[i]);
-            }
-        }
-        return retorno;
-    }
-
-    public Lista<String> verticesIncidentes(String vert) { // Columnas
-        Lista<String> retorno = new ListaImp<>();
-        int pos = obtenerPos(vert);
-        for (int i = 0; i < tope; i++) {
-            if (this.matAdy[i][pos].isExiste()) {
-                retorno.insertar(centros[i]);
-            }
-        }
-        return retorno;
-    }*/
 
     public String insertarCentroUrbano(CentroUrbano aAgregar) {
         if (this.esLleno()) {
@@ -208,100 +178,4 @@ public class GrafoMapa {
         return listaCentro.toString();
     }
 
-
-
-//    public void dfs(String vert) {
-//        boolean[] visitados = new boolean[tope];
-//        int pos = obtenerPos(vert);
-//        dfsRec(pos, visitados);
-//    }
-//
-//    private void dfsRec(int pos, boolean[] visitados) {
-//        System.out.println(vertices[pos]);
-//        visitados[pos] = true;
-//        for (int i = 0; i < tope; i++) {
-//            if (matAdy[pos][i].isExiste() && !visitados[i]) { // Si existe la arista y no fue visitado
-//                dfsRec(i, visitados);
-//            }
-//        }
-//    }
-
-//    public void bfs(String vert) {
-//        int inicio = obtenerPos(vert);
-//        boolean[] visitados = new boolean[tope];
-//        Cola<Integer> cola = new ColaImp<>();
-//        cola.encolar(inicio);
-//        while (!cola.esVacia()) {
-//            int pos = cola.desencolar();
-//            if (!visitados[pos]) {
-//                visitados[pos] = true;
-//                System.out.println(vertices[pos]);
-//                for (int i = 0; i < tope; i++) {
-//                    if (this.matAdy[pos][i].isExiste() && !visitados[i]) {
-//                        cola.encolar(i);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    public void bfs2(String vert) {
-//        int inicio = obtenerPos(vert);
-//        boolean[] visitados = new boolean[tope];
-//        Cola<Integer> cola = new ColaImp<>();
-//        cola.encolar(inicio);
-//        visitados[inicio] = true;
-//        while (!cola.esVacia()) {
-//            int pos = cola.desencolar();
-//            System.out.println(vertices[pos]);
-//            for (int i = 0; i < tope; i++) {
-//                if (this.matAdy[pos][i].isExiste() && !visitados[i]) {
-//                    cola.encolar(i);
-//                    visitados[i] = true;
-//                }
-//            }
-//        }
-//    }
-//
-//    public int dijkstra(String vOrigen, String vDestino) {
-//        int posOrigen = obtenerPos(vOrigen);
-//        int posDestino = obtenerPos(vDestino);
-//        boolean[] visitados = new boolean[this.tope];
-//        int[] costos = new int[this.tope];
-//        String[] anterior = new String[this.tope];
-//
-//        for (int i = 0; i < tope; i++) {
-//            costos[i] = Integer.MAX_VALUE;
-//            anterior[i] = "-";
-//        }
-//
-//        costos[posOrigen] = 0;
-//        for (int i = 0; i < tope; i++) {
-//            int pos = obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(costos, visitados);
-//            visitados[pos] = true;
-//            for (int j = 0; j < tope; j++) {
-//                int distanciaNueva = costos[pos] + matAdy[pos][j].getPeso();
-//                if (matAdy[pos][j].isExiste() && !visitados[j]) {
-//                    costos[j] = distanciaNueva;
-//                    anterior[i] = vertices[pos];
-//                }
-//            }
-//        }
-//
-//        return 0;
-//    }
-//
-//    private int obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(int[] costos, boolean[] visitados) {
-//        int posMin = -1;
-//        int min = Integer.MAX_VALUE;
-//
-//        for (int i = 0; i < tope; i++) {
-//            if (!visitados[i] && costos[i] < min) {
-//                min = costos[i];
-//                posMin = i;
-//            }
-//        }
-//
-//        return posMin;
-//    }
 }
