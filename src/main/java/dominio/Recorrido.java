@@ -22,10 +22,10 @@ public class Recorrido {
         this.existe = existe;
     }
 
+    //ToDo VER DE MOVER ESTAS FUNCIONES A CAMINO
     public void agregarCaminoALista(Camino camino){
         this.listaCaminos.insertar(camino);
     }
-
     public boolean modificarCamino(String origen, String destino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
         NodoCamino nodoCamino = listaCaminos.buscarCamino(origen, destino);
         if (nodoCamino != null) {

@@ -1,6 +1,5 @@
 package lista;
 
-import lista.Lista;
 import dominio.Camino;
 
 import java.util.Iterator;
@@ -17,7 +16,7 @@ public class ListaCamino implements Lista<Camino> {
 
     @Override
     public boolean esVacia(){
-        return true;
+        return this.largo > 0;
     }
 
     @Override
@@ -39,22 +38,6 @@ public class ListaCamino implements Lista<Camino> {
         return this.largo;
     }
 
-    @Override
-    public Iterator<Camino> iterator() {
-        return null;
-    }
-
- /*   public boolean existeVuelo(String codigoVuelo){
-        NodoCamino vuelo = inicio;
-        while (vuelo != null){
-            if(vuelo.getCamino().getc().equals(codigoVuelo)){
-                return true;
-            }
-            vuelo = camino.getSig();
-        }
-        return false;
-    }*/
-
     public NodoCamino buscarCamino (String origen, String destino){
         NodoCamino camino = inicio;
         while (camino != null){
@@ -66,19 +49,9 @@ public class ListaCamino implements Lista<Camino> {
         return null;
     }
 
-/*    public int buscarVueloMasBarato(){
-*//*        NodoListaVuelo vuelo = inicio;
-        int costoMasBajo = Integer.MAX_VALUE;
-        while (vuelo != null){
-            if(vuelo.getVuelo().getCostoEnDolares() < costoMasBajo){
-                costoMasBajo = (int)vuelo.getVuelo().getCostoEnDolares();
-            }
-            vuelo = vuelo.getSig();
-        }
-        return costoMasBajo;
-    }*/
-
-
-
+    @Override
+    public Iterator<Camino> iterator() {
+        return null;
+    }
 
 }

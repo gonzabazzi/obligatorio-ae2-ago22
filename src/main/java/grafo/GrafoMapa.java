@@ -6,14 +6,16 @@ import dominio.CentroUrbano;
 import dominio.Camino;
 import dominio.Recorrido;
 import interfaz.EstadoCamino;
+import lista.ListaCentro;
 
 import java.util.Objects;
 
 public class GrafoMapa {
     private final int tope;
     private int cantidad;
-    private Recorrido[][] matAdy;
+    private Recorrido[][] matAdy; //ToDo ES NECESARIO TENER RECORRIDO??
     private CentroUrbano [] centros;
+    private ListaCentro listaCentro;
 
     public GrafoMapa(int unTope, boolean esDirigido) {
         this.tope = unTope;
@@ -37,6 +39,10 @@ public class GrafoMapa {
         }
     }
 
+    public ListaCentro getListaCentro() {
+        return listaCentro;
+    }
+
     public boolean esLleno () {
         return cantidad == tope;
     }
@@ -54,7 +60,7 @@ public class GrafoMapa {
         return -1;
     }
 
-    private int obtenerPos (String codigo) {
+    public int obtenerPos (String codigo) {
         for (int i = 0; i < this.tope; i++) {
             if (this.centros[i] != null && this.centros[i].getCodigo().equals(codigo)) {
                 return i;
@@ -176,6 +182,33 @@ public class GrafoMapa {
             }
         }
     }
+
+    public String listadoCentrosPorCantSaltos(String codigoCentroOrigen, int cantidad) {
+        ListaCentro listaCentro = new ListaCentro();
+        int contador = 0;
+        boolean[] visitados = new boolean[tope];
+        int pos = obtenerPos(codigoCentroOrigen);
+        if (cantidad == 0) {
+            CentroUrbano aux = centros[pos];
+            return aux.toString();
+        }
+        return listadoCentrosPorCantSaltosRec(pos, visitados, cantidad, contador, listaCentro);
+    }
+    private String listadoCentrosPorCantSaltosRec(int posicionCentro, boolean[] visitados, int cantidad, int contador, ListaCentro listaCentro) {
+        visitados[posicionCentro] = true;
+        listaCentro.insertar(centros[posicionCentro]);
+        for (int j = 0; j < tope; j++) {
+            if (this.matAdy[posicionCentro][j].isExiste() && !visitados[j]) {
+                if (contador <= cantidad) {
+                    contador++;
+                    listadoCentrosPorCantSaltosRec(j, visitados, cantidad, contador, listaCentro);
+                }
+            }
+        }
+        return listaCentro.toString();
+    }
+
+
 
 //    public void dfs(String vert) {
 //        boolean[] visitados = new boolean[tope];

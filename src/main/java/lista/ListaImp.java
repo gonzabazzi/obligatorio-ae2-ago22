@@ -2,6 +2,7 @@ package lista;
 
 import java.util.Iterator;
 
+//ToDo BORRAR SI NO SE UTILIZA
 public class ListaImp <T> implements Lista<T>{
     protected NodoLista<T> inicio;
     //protected int largo;

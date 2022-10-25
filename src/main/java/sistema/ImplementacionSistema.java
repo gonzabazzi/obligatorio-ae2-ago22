@@ -195,7 +195,16 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listadoCentrosCantDeSaltos(String codigoCentroOrigen, int cantidad) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+        String auxiliar = mapa.listadoCentrosPorCantSaltos(codigoCentroOrigen, cantidad);
+        if (cantidad < 0) {
+            return Retorno.error1("La cantidad de saltos debe ser mayor a 0.");
+        } else if (mapa.obtenerPos(codigoCentroOrigen) == -1) {
+            return Retorno.error2("No existe un centro con ese código.");
+        } else {
+            ret.valorString = auxiliar.substring(0, auxiliar.length() - 1);
+            return ret;
+        }
     }
 
     @Override

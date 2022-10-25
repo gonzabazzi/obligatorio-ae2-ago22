@@ -37,5 +37,8 @@ public class CentroUrbano implements Comparable<CentroUrbano>{
         }
     }
 
-
+    @Override
+    public String toString() {
+        return codigo + ";" + nombre + '|';
+    }
 }
