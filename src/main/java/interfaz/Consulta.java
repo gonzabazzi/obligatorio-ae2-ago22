@@ -378,16 +378,21 @@ public class Consulta {
         if(nodo==null){
             return false;
         }else{
-            boolean der = cumpleConsultaRec(jugador, nodo.getDer());
+            //boolean der = cumpleConsultaRec(jugador, nodo.getDer());
             switch (nodo.getTipoNodoConsulta().valorStr){
                 case "AND":
-                return cumpleConsultaRec(jugador, nodo.getIzq());
+                    if(cumpleConsultaRec(jugador, nodo.getDer())){
+                        return cumpleConsultaRec(jugador, nodo.getIzq());
+                    } else {
+                        return false;
+                    }
 
                 case "OR":
                     if(!cumpleConsultaRec(jugador, nodo.getDer())){
                         return cumpleConsultaRec(jugador, nodo.getIzq());
+                    } else {
+                        return true;
                     }
-                    break;
 
                 case "edad":
                     if(jugador.getEdad() > nodo.valorInt){
@@ -407,7 +412,7 @@ public class Consulta {
                     }
                     break;
             }
-            boolean izq = cumpleConsultaRec(jugador, nodo.getIzq());
+            //boolean izq = cumpleConsultaRec(jugador, nodo.getIzq());
             return false;
         }
 

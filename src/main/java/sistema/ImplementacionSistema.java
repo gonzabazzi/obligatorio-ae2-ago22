@@ -62,13 +62,14 @@ public class ImplementacionSistema implements Sistema {
     //ToDo CONSULTAR RECORRIDA DE ANDS y ORS
     public Retorno filtrarJugadores(Consulta consulta) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
-
-        ret.valorString = abbJugador.filtrarJugadores(consulta);
-
-        if(!Objects.equals(ret.valorString, "")) {
-            ret.valorString = ret.valorString.substring(0, ret.valorString.length() - 1);
+        if(consulta != null){
+            ret.valorString = abbJugador.filtrarJugadores(consulta);
+            if(!Objects.equals(ret.valorString, "")) {
+                ret.valorString = ret.valorString.substring(0, ret.valorString.length() - 1);
+            }
+        } else {
+            return Retorno.error1("La consulta es vacía");
         }
-
         return ret ;
     }
 

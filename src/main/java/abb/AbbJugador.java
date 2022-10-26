@@ -124,7 +124,7 @@ public class AbbJugador {
     }
 
     public boolean validarCampos (String ci, String nombre,int edad, String escuela, TipoJugador tipo){
-        return !(ci == null || ci == "" || nombre == "" || nombre == null || edad <= 0 || escuela == "" || escuela == null || tipo == null);
+        return !(ci == null || ci.isEmpty() || nombre == null || nombre.isEmpty() || edad <= 0 || escuela == null || escuela.isEmpty() || tipo == null);
     }
 
     public String filtrarJugadores(Consulta consulta) {
