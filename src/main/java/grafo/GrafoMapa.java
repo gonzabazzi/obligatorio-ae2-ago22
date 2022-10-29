@@ -27,7 +27,7 @@ public class GrafoMapa {
                     this.matAdy[i][j] = new Recorrido();
                 }
             }
-        } else { // Dada la diagonal recorro tiangulo superior
+        } else { // Dada la diagonal recorro triangulo superior
             for (int i = 0; i < this.tope; i++) {
                 for (int j = i; j < this.tope; j++) {
                     this.matAdy[i][j] = new Recorrido(); // Pongo un objeto en esa posicion
@@ -110,7 +110,6 @@ public class GrafoMapa {
     }
 
     private boolean existeCentro(String codigoCentro) {
-
         return obtenerPos(codigoCentro) > - 1;
     }
 
@@ -126,8 +125,11 @@ public class GrafoMapa {
         } else if (existeCamino(aAgregar.getCodigoCentroOrigen(), aAgregar.getCodigoCentroDestino()) || existeCamino(aAgregar.getCodigoCentroDestino(), aAgregar.getCodigoCentroOrigen())  ) {
             return "5";
         } else {
-            matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].setExiste(true);
-            matAdy[obtenerPos(aAgregar.getCodigoCentroOrigen())][obtenerPos(aAgregar.getCodigoCentroDestino())].agregarCaminoALista(aAgregar);
+            int posOrigen = obtenerPos(aAgregar.getCodigoCentroOrigen());
+            int posDestino =obtenerPos(aAgregar.getCodigoCentroDestino());
+            matAdy[posOrigen][posDestino].setExiste(true);
+            matAdy[posOrigen][posDestino].setKilometros(aAgregar.getKilometros());
+            matAdy[posOrigen][posDestino].agregarCaminoALista(aAgregar);
             return "Ok";
         }
     }
@@ -158,12 +160,17 @@ public class GrafoMapa {
         int contador = 0;
         boolean[] visitados = new boolean[tope];
         int pos = obtenerPos(codigoCentroOrigen);
-        if (cantidad == 0) {
-            CentroUrbano aux = centros[pos];
-            return aux.toString();
+        if (pos != -1) {
+            if (cantidad == 0) {
+                CentroUrbano aux = centros[pos];
+                return aux.toString();
+            }
+            return listadoCentrosPorCantSaltosRec(pos, visitados, cantidad, contador, listaCentro);
+        } else {
+            return "-1";
         }
-        return listadoCentrosPorCantSaltosRec(pos, visitados, cantidad, contador, listaCentro);
     }
+
     private String listadoCentrosPorCantSaltosRec(int posicionCentro, boolean[] visitados, int cantidad, int contador, ListaCentro listaCentro) {
         visitados[posicionCentro] = true;
         listaCentro.insertar(centros[posicionCentro]);
@@ -178,4 +185,61 @@ public class GrafoMapa {
         return listaCentro.toString();
     }
 
+    public  int viajeConCostoMinimo(String codigoCentroOrigen, String codigoCentroDestino) {
+        int posOrigen = obtenerPos(codigoCentroOrigen);
+        int posDestino = obtenerPos(codigoCentroDestino);
+
+        if (codigoCentroOrigen== null || codigoCentroOrigen.isEmpty() || codigoCentroDestino == null || codigoCentroDestino.isEmpty()) {
+            return -4;
+        }
+
+
+        if (posOrigen == -1) {
+            return -1;
+        } else if (posDestino == -1) {
+            return -2;
+        } else if (!existeCamino(codigoCentroOrigen, codigoCentroDestino)) {
+            return -3;
+        }
+
+        boolean[] visitados = new boolean[this.tope];
+        int[] kilometros = new int[this.tope];
+        CentroUrbano[] anterior = new CentroUrbano[tope];
+
+        for (int i = 0; i < this.tope; i++) {
+            kilometros[i] = Integer.MAX_VALUE;
+            anterior[i] = null;
+        }
+
+        kilometros[posOrigen] = 0;
+        for (int v = 0; v < this.cantidad; v++) {
+            int pos = obtenerSiguienteVerticeNoVisitadoDeMenorKilometros(kilometros, visitados);
+            if (pos != -1) {
+                visitados[pos] = true;
+                for (int j = 0; j < tope; j++) {
+                    if (matAdy[pos][j].isExiste() && !visitados[j]) {
+                        int costoNuevo = kilometros[pos] + (int) matAdy[pos][j].getKilometros();
+                        if (costoNuevo < kilometros[j]) {
+                            kilometros[j] = costoNuevo;
+                            anterior[j] = centros[pos];
+                        }
+                    }
+                }
+            }
+        }
+        this.listaCentro = new ListaCentro();
+        return kilometros[posDestino];
+    }
+
+    private int obtenerSiguienteVerticeNoVisitadoDeMenorKilometros(int[] kilometros, boolean[] visitados) {
+        int posMin = -1;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < tope; i++) {
+            if (!visitados[i] && kilometros[i] < min) {
+                min = kilometros[i];
+                posMin = i;
+            }
+        }
+        return posMin;
+    }
 }

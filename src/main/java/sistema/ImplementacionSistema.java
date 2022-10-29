@@ -195,20 +195,37 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno listadoCentrosCantDeSaltos(String codigoCentroOrigen, int cantidad) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
-        String auxiliar = mapa.listadoCentrosPorCantSaltos(codigoCentroOrigen, cantidad);
         if (cantidad < 0) {
-            return Retorno.error1("La cantidad de saltos debe ser mayor a 0.");
-        } else if (mapa.obtenerPos(codigoCentroOrigen) == -1) {
+            return Retorno.error1("La cantidad de saltos debe ser mayor o igual a 0.");
+        }
+        String centrosPorCantidadSaltos = mapa.listadoCentrosPorCantSaltos(codigoCentroOrigen, cantidad);
+        if (centrosPorCantidadSaltos.equals("-1")) {
             return Retorno.error2("No existe un centro con ese código.");
         } else {
-            ret.valorString = auxiliar.substring(0, auxiliar.length() - 1);
+            ret.valorString = centrosPorCantidadSaltos.substring(0, centrosPorCantidadSaltos.length() - 1);
             return ret;
         }
     }
 
     @Override
     public Retorno viajeCostoMinimoKilometros(String codigoCentroOrigen, String codigoCentroDestino) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+
+        int viajeConCostoMinimo = mapa.viajeConCostoMinimo(codigoCentroOrigen, codigoCentroDestino);
+        if (viajeConCostoMinimo == -4) {
+           return Retorno.error1("Los codigos no pueden ser vacios");
+        } else if (viajeConCostoMinimo == -3) {
+            return Retorno.error2("No hay camino entre origen y destino.");
+        } else if (viajeConCostoMinimo == -1) {
+            return Retorno.error3("No existe centro de origen.");
+        } else if (viajeConCostoMinimo == -2) {
+            return Retorno.error4("No existe centro de destino.");
+        } else {
+            String auxiliar = mapa.getListaCentro().toString();
+            ret.valorString = auxiliar.substring(0, auxiliar.length() - 1);
+            ret.valorInteger = viajeConCostoMinimo;
+            return ret;
+        }
     }
 
     @Override

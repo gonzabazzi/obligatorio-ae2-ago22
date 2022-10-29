@@ -1,6 +1,8 @@
 package dominio;
 
 import interfaz.EstadoCamino;
+import lista.ListaCamino;
+import lista.NodoCamino;
 
 public class Camino {
     private String codigoCentroOrigen;
@@ -10,6 +12,9 @@ public class Camino {
     private double kilometros;
     private EstadoCamino estadoCamino;
     private boolean existe;
+
+    private ListaCamino listaCaminos = new ListaCamino();
+
 
     public Camino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoCamino) {
         this.codigoCentroOrigen = codigoCentroOrigen;
@@ -76,5 +81,4 @@ public class Camino {
     public void setExiste(boolean existe) {
         this.existe = existe;
     }
-
 }
