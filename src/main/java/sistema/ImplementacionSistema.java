@@ -38,7 +38,28 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno explorarCentroUrbano(boolean[] correctas, int[] puntajes, int minimo) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+
+        if (correctas == null || puntajes == null) {
+            return Retorno.error1("Error");
+        } else if (correctas.length < 3 || puntajes.length < 3) {
+            return Retorno.error2("No puede haber menor de 3 datos");
+        } else if (correctas.length != puntajes.length) {
+            return Retorno.error3("No puede haber menos de 3 datos");
+        } else if (minimo <= 0) {
+            return Retorno.error4("El minimo tiene que ser mayor a 0");
+        } else {
+            int resultadoExploracion = this.resultadoDeExplorarCentro(correctas, puntajes, minimo);
+            if (resultadoExploracion >= minimo) {
+                ret.valorString = "pasa";
+                ret.valorInteger = resultadoExploracion;
+            } else {
+                ret.valorString = "no pasa";
+                ret.valorInteger = resultadoExploracion;
+            }
+        }
+
+        return ret;
     }
 
     @Override
@@ -262,5 +283,34 @@ public class ImplementacionSistema implements Sistema {
 
     public Lista<Jugador> obtenerJugadorPorTipo (TipoJugador aBuscar) {
         return jugadoresPorTipo.get(aBuscar.getIndice());
+    }
+
+    private int resultadoDeExplorarCentro(boolean[] correctas, int[] puntajes, int minimo) {
+        int puntosTotales = 0;
+        int cantCorrectasSeguidas = 0;
+
+        for (int i = 0; i < correctas.length; i++) {
+            if (correctas[i]) {
+                cantCorrectasSeguidas++;
+                puntosTotales += puntajes[i];
+            } else {
+                cantCorrectasSeguidas = 0;
+            }
+
+            if (cantCorrectasSeguidas == 3) {
+                puntosTotales += 3;
+            }
+
+            if (cantCorrectasSeguidas == 4) {
+                puntosTotales += 5;
+            }
+
+            if (cantCorrectasSeguidas >= 5) {
+                puntosTotales += 8;
+            }
+
+        }
+
+        return puntosTotales;
     }
 }
