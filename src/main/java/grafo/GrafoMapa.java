@@ -257,7 +257,7 @@ public class GrafoMapa {
             int posCentro = obtenerPos(actual.getCodigo());
             CentroUrbano centroAnterior = anterior[posCentro];
             obtenerRecorridoRec(listaCentro, anterior, centroAnterior);
-            this.listaCentro.agregarAlista(actual);
+            this.listaCentro.insertar(actual);
         }
         return listaCentro;
     }
