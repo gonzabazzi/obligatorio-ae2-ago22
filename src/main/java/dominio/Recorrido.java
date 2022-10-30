@@ -8,7 +8,8 @@ public class Recorrido {
     private boolean existe;
     private String codigoAeropuertoOrigen;
     private String codigoAeropuertoDestino;
-    private double kilometros;
+    private double kilometros; //TODO: Se sobre escriben los kilometros en caso de agregar mas de un camino al recorrido
+    private EstadoCamino estadoCamino;
     private ListaCamino listaCaminos = new ListaCamino();
 
     public boolean isExiste() {
@@ -49,6 +50,14 @@ public class Recorrido {
 
     public void setKilometros (double kilometros) {
         this.kilometros = kilometros;
+    }
+
+    public EstadoCamino getEstadoCamino() {
+        return estadoCamino;
+    }
+
+    public void setEstadoCamino(EstadoCamino estadoCamino) {
+        this.estadoCamino = estadoCamino;
     }
 
     public void agregarCaminoALista(Camino camino){

@@ -73,5 +73,8 @@ public class Main {
         System.out.println("Func 11- Actualizar camino:");
         System.out.println(nuevoSistema.actualizarCamino("1", "2", 9, 45, 20, EstadoCamino.BUENO).valorString);
         System.out.println(nuevoSistema.actualizarCamino("28", "4", 9, 45, 20, EstadoCamino.BUENO).valorString);
+
+        System.out.println("Func 13- Viaje costo minimo en km:");
+        System.out.println(nuevoSistema.viajeCostoMinimoKilometros("1", "4").valorString);
     }
 }

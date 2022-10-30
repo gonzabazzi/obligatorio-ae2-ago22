@@ -4,6 +4,7 @@ import dominio.CentroUrbano;
 import dominio.Camino;
 import dominio.Recorrido;
 import interfaz.EstadoCamino;
+import lista.ListaCamino;
 import lista.ListaCentro;
 
 import java.util.Objects;
@@ -129,6 +130,7 @@ public class GrafoMapa {
             int posDestino =obtenerPos(aAgregar.getCodigoCentroDestino());
             matAdy[posOrigen][posDestino].setExiste(true);
             matAdy[posOrigen][posDestino].setKilometros(aAgregar.getKilometros());
+            matAdy[posOrigen][posDestino].setEstadoCamino(aAgregar.getEstadoCamino());
             matAdy[posOrigen][posDestino].agregarCaminoALista(aAgregar);
             return "Ok";
         }
@@ -193,13 +195,10 @@ public class GrafoMapa {
             return -4;
         }
 
-
         if (posOrigen == -1) {
             return -1;
         } else if (posDestino == -1) {
             return -2;
-        } else if (!existeCamino(codigoCentroOrigen, codigoCentroDestino)) {
-            return -3;
         }
 
         boolean[] visitados = new boolean[this.tope];
@@ -217,7 +216,7 @@ public class GrafoMapa {
             if (pos != -1) {
                 visitados[pos] = true;
                 for (int j = 0; j < tope; j++) {
-                    if (matAdy[pos][j].isExiste() && !visitados[j]) {
+                    if (matAdy[pos][j].isExiste() && !matAdy[pos][j].getEstadoCamino().equals(EstadoCamino.MALO) && !visitados[j]) {
                         int costoNuevo = kilometros[pos] + (int) matAdy[pos][j].getKilometros();
                         if (costoNuevo < kilometros[j]) {
                             kilometros[j] = costoNuevo;
@@ -227,7 +226,13 @@ public class GrafoMapa {
                 }
             }
         }
+
+        if (kilometros[posDestino] == Integer.MAX_VALUE) {
+            return -3;
+        }
+
         this.listaCentro = new ListaCentro();
+        obtenerRecorrido(listaCentro, anterior, posDestino);
         return kilometros[posDestino];
     }
 
@@ -241,5 +246,20 @@ public class GrafoMapa {
             }
         }
         return posMin;
+    }
+
+    private ListaCentro obtenerRecorrido (ListaCentro listaCentro, CentroUrbano[] anterior, int centroDestino) {
+        CentroUrbano centro = centros[centroDestino];
+        return obtenerRecorridoRec(listaCentro, anterior, centro);
+    }
+
+    private ListaCentro obtenerRecorridoRec (ListaCentro listaCentro, CentroUrbano[] anterior, CentroUrbano actual) {
+        if (actual != null) {
+            int posCentro = obtenerPos(actual.getCodigo());
+            CentroUrbano centroAnterior = anterior[posCentro];
+            obtenerRecorridoRec(listaCentro, anterior, centroAnterior);
+            this.listaCentro.insertar(actual);
+        }
+        return listaCentro;
     }
 }
