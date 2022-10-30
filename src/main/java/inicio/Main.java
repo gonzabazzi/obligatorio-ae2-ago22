@@ -76,5 +76,10 @@ public class Main {
 
         System.out.println("Func 13- Viaje costo minimo en km:");
         System.out.println(nuevoSistema.viajeCostoMinimoKilometros("1", "4").valorString);
+
+        System.out.println("Func 14- Viaje costo minimo en monedas:");
+        System.out.println(nuevoSistema.viajeCostoMinimoMonedas("6", "5").valorString);
+        System.out.println(nuevoSistema.viajeCostoMinimoMonedas("1", "4").valorString);
+        System.out.println(nuevoSistema.viajeCostoMinimoMonedas("3", "4").valorString);
     }
 }

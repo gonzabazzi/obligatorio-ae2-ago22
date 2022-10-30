@@ -54,4 +54,15 @@ public class ListaCamino implements Lista<Camino> {
         return null;
     }
 
+    public int buscarCaminoMasBarato() {
+        NodoCamino camino = inicio;
+        int costoMasBajo = Integer.MAX_VALUE;
+        while (camino != null){
+            if(camino.getCamino().getCosto() < costoMasBajo){
+                costoMasBajo = (int)camino.getCamino().getCosto();
+            }
+            camino = camino.getSig();
+        }
+        return costoMasBajo;
+    }
 }

@@ -22,7 +22,6 @@ public class ImplementacionSistema implements Sistema {
     Jugador jugador;
     GrafoMapa mapa;
 
-    // Creo HashMap vacío y le indico tipo de clave y valor
     HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
 
     @Override
@@ -211,26 +210,43 @@ public class ImplementacionSistema implements Sistema {
     public Retorno viajeCostoMinimoKilometros(String codigoCentroOrigen, String codigoCentroDestino) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
 
-        int viajeConCostoMinimo = mapa.viajeConCostoMinimo(codigoCentroOrigen, codigoCentroDestino);
-        if (viajeConCostoMinimo == -4) {
+        int viajeConCostoMinimoKilometros = mapa.viajeConCostoMinimo(codigoCentroOrigen, codigoCentroDestino);
+        if (viajeConCostoMinimoKilometros == -4) {
            return Retorno.error1("Los codigos no pueden ser vacios");
-        } else if (viajeConCostoMinimo == -3) {
+        } else if (viajeConCostoMinimoKilometros == -3) {
             return Retorno.error2("No hay camino entre origen y destino.");
-        } else if (viajeConCostoMinimo == -1) {
+        } else if (viajeConCostoMinimoKilometros == -1) {
             return Retorno.error3("No existe centro de origen.");
-        } else if (viajeConCostoMinimo == -2) {
+        } else if (viajeConCostoMinimoKilometros == -2) {
             return Retorno.error4("No existe centro de destino.");
+
         } else {
             String auxiliar = mapa.getListaCentro().toString();
             ret.valorString = auxiliar.substring(0, auxiliar.length() - 1);
-            ret.valorInteger = viajeConCostoMinimo;
+            ret.valorInteger = viajeConCostoMinimoKilometros;
             return ret;
         }
     }
 
     @Override
     public Retorno viajeCostoMinimoMonedas(String codigoCentroOrigen, String codigoCentroDestino) {
-        return Retorno.noImplementada();
+        Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
+
+        int viajeConCostoMinimoMonedas = mapa.viajeConCostoMinimoMonedas(codigoCentroOrigen, codigoCentroDestino);
+        if (viajeConCostoMinimoMonedas == -4) {
+            return Retorno.error1("Los codigos no pueden ser vacios");
+        } else if (viajeConCostoMinimoMonedas == -3) {
+            return Retorno.error2("No hay camino entre origen y destino.");
+        } else if (viajeConCostoMinimoMonedas == -1) {
+            return Retorno.error3("No existe centro de origen.");
+        } else if (viajeConCostoMinimoMonedas == -2) {
+            return Retorno.error4("No existe centro de destino.");
+        } else {
+            String auxiliar = mapa.getListaCentro().toString();
+            ret.valorString = auxiliar.substring(0, auxiliar.length() - 1);
+            ret.valorInteger = viajeConCostoMinimoMonedas;
+            return ret;
+        }
     }
 
     //Función auxiliar para agregar jugadores por tipo

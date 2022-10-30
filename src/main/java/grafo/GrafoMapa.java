@@ -262,4 +262,53 @@ public class GrafoMapa {
         }
         return listaCentro;
     }
+
+    public int viajeConCostoMinimoMonedas(String codigoCentroOrigen, String codigoCentroDestino) {
+        int posOrigen = obtenerPos(codigoCentroOrigen);
+        int posDestino = obtenerPos(codigoCentroDestino);
+
+        if (codigoCentroOrigen== null || codigoCentroOrigen.isEmpty() || codigoCentroDestino == null || codigoCentroDestino.isEmpty()) {
+            return -4;
+        }
+
+        if (posOrigen == -1) {
+            return -1;
+        } else if (posDestino == -1) {
+            return -2;
+        }
+
+        boolean[] visitados = new boolean[this.tope];
+        int[] costo = new int[this.tope];
+        CentroUrbano[] anterior = new CentroUrbano[tope];
+
+        for (int i = 0; i < this.tope; i++) {
+            costo[i] = Integer.MAX_VALUE;
+            anterior[i] = null;
+        }
+
+        costo[posOrigen] = 0;
+        for (int v = 0; v < this.cantidad; v++) {
+            int pos = obtenerSiguienteVerticeNoVisitadoDeMenorKilometros(costo, visitados);
+            if (pos != -1) {
+                visitados[pos] = true;
+                for (int j = 0; j < tope; j++) {
+                    if (matAdy[pos][j].isExiste() && !matAdy[pos][j].getEstadoCamino().equals(EstadoCamino.MALO) && !visitados[j]) {
+                        int costoNuevo = costo[pos] + (int) matAdy[pos][j].getListaCaminos().buscarCaminoMasBarato();
+                        if (costoNuevo < costo[j]) {
+                            costo[j] = costoNuevo;
+                            anterior[j] = centros[pos];
+                        }
+                    }
+                }
+            }
+        }
+
+        if (costo[posDestino] == Integer.MAX_VALUE) {
+            return -3;
+        }
+
+        this.listaCentro = new ListaCentro();
+        obtenerRecorrido(listaCentro, anterior, posDestino);
+        return costo[posDestino];
+    }
 }
