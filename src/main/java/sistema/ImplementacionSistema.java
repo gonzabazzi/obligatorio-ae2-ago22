@@ -49,7 +49,7 @@ public class ImplementacionSistema implements Sistema {
         } else if (minimo <= 0) {
             return Retorno.error4("El minimo tiene que ser mayor a 0");
         } else {
-            int resultadoExploracion = this.resultadoDeExplorarCentro(correctas, puntajes, minimo);
+            int resultadoExploracion = this.resultadoDeExplorarCentro(correctas, puntajes);
             if (resultadoExploracion >= minimo) {
                 ret.valorString = "pasa";
                 ret.valorInteger = resultadoExploracion;
@@ -285,7 +285,7 @@ public class ImplementacionSistema implements Sistema {
         return jugadoresPorTipo.get(aBuscar.getIndice());
     }
 
-    private int resultadoDeExplorarCentro(boolean[] correctas, int[] puntajes, int minimo) {
+    private int resultadoDeExplorarCentro(boolean[] correctas, int[] puntajes) {
         int puntosTotales = 0;
         int cantCorrectasSeguidas = 0;
 
