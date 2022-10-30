@@ -174,7 +174,7 @@ public class GrafoMapa {
 
     private String listadoCentrosPorCantSaltosRec(int posicionCentro, boolean[] visitados, int cantidad, int contador, ListaCentro listaCentro) {
         visitados[posicionCentro] = true;
-        listaCentro.insertar(centros[posicionCentro]);
+        listaCentro.agregarAlista(centros[posicionCentro]);
         for (int j = 0; j < tope; j++) {
             if (this.matAdy[posicionCentro][j].isExiste() && !visitados[j]) {
                 if (contador <= cantidad) {
@@ -257,7 +257,7 @@ public class GrafoMapa {
             int posCentro = obtenerPos(actual.getCodigo());
             CentroUrbano centroAnterior = anterior[posCentro];
             obtenerRecorridoRec(listaCentro, anterior, centroAnterior);
-            this.listaCentro.insertar(actual);
+            this.listaCentro.agregarAlista(actual);
         }
         return listaCentro;
     }

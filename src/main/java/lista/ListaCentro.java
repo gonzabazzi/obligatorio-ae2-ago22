@@ -23,12 +23,52 @@ public class ListaCentro implements Lista<CentroUrbano> {
     public void insertar(CentroUrbano centroUrbano){
         if(inicio == null){
             inicio = new NodoCentro(centroUrbano);
+            ultimo = inicio;
         } else {
             NodoCentro aux = inicio;
             while (aux.getSig() != null){
                 aux = aux.getSig();
             }
             aux.setSig(new NodoCentro(centroUrbano));
+            ultimo = aux.getSig();
+        }
+        largo++;
+    }
+
+    public void agregarAlista(CentroUrbano centroUrbano) {
+        if (inicio == null) {
+            inicio = new NodoCentro(centroUrbano);
+            ultimo = inicio;
+            largo++;
+        } else {
+            inicio = agregarAlistaRec(inicio, centroUrbano);
+        }
+    }
+    private NodoCentro agregarAlistaRec(NodoCentro nodo, CentroUrbano dato) {
+        if (nodo == null || (nodo.getCentro().getCodigo().compareTo(dato.getCodigo()) > 0)) {
+            NodoCentro nuevo = new NodoCentro(dato);
+            if (nodo != null) {
+                nodo.setAnt(nuevo);
+            }
+            nuevo.setSig(nodo);
+            this.agregarFinal(nuevo.getCentro());
+            return nuevo;
+        }
+        NodoCentro llamada = agregarAlistaRec(nodo.getSig(), dato);
+        llamada.setAnt(nodo);
+        nodo.setSig(llamada);
+
+        return nodo;
+    }
+    public void agregarFinal(CentroUrbano objeto) {
+        NodoCentro nuevo = new NodoCentro(objeto);
+        if (this.esVacia()) {
+            inicio = nuevo;
+            ultimo = inicio;
+        } else {
+            ultimo.setSig(nuevo);
+            nuevo.setAnt(ultimo);
+            ultimo = nuevo;
         }
         largo++;
     }

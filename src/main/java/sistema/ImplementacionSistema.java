@@ -79,7 +79,6 @@ public class ImplementacionSistema implements Sistema {
     }
 
     @Override
-    //ToDo CONSULTAR RECORRIDA DE ANDS y ORS
     public Retorno filtrarJugadores(Consulta consulta) {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
         if(consulta != null){
