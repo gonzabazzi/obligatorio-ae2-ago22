@@ -11,8 +11,8 @@ import java.util.Objects;
 public class GrafoMapa {
     private final int tope;
     private int cantidad;
-    private Recorrido[][] matAdy; //ToDo ES NECESARIO TENER RECORRIDO??
-    private CentroUrbano [] centros;
+    private final Recorrido[][] matAdy;
+    private final CentroUrbano [] centros;
     private ListaCentro listaCentro;
 
     public GrafoMapa(int unTope, boolean esDirigido) {
@@ -177,9 +177,8 @@ public class GrafoMapa {
         listaCentro.agregarAlista(centros[posicionCentro]);
         for (int j = 0; j < tope; j++) {
             if (this.matAdy[posicionCentro][j].isExiste() && !visitados[j]) {
-                if (contador <= cantidad) {
-                    contador++;
-                    listadoCentrosPorCantSaltosRec(j, visitados, cantidad, contador, listaCentro);
+                if (contador < cantidad) {
+                    listadoCentrosPorCantSaltosRec(j, visitados, cantidad, contador+1, listaCentro);
                 }
             }
         }
