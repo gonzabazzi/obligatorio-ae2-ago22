@@ -4,7 +4,6 @@ import dominio.CentroUrbano;
 import dominio.Camino;
 import dominio.Recorrido;
 import interfaz.EstadoCamino;
-import lista.ListaCamino;
 import lista.ListaCentro;
 
 import java.util.Objects;
@@ -293,7 +292,7 @@ public class GrafoMapa {
                 visitados[pos] = true;
                 for (int j = 0; j < tope; j++) {
                     if (matAdy[pos][j].isExiste() && !matAdy[pos][j].getEstadoCamino().equals(EstadoCamino.MALO) && !visitados[j]) {
-                        int costoNuevo = costo[pos] + (int) matAdy[pos][j].getListaCaminos().buscarCaminoMasBarato();
+                        int costoNuevo = costo[pos] + (int) matAdy[pos][j].getListaCaminos().buscarCaminoMenorCosto();
                         if (costoNuevo < costo[j]) {
                             costo[j] = costoNuevo;
                             anterior[j] = centros[pos];
