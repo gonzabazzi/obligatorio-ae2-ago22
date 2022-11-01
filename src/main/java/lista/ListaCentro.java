@@ -74,11 +74,6 @@ public class ListaCentro implements Lista<CentroUrbano> {
     }
 
     @Override
-    public int largo() {
-        return this.largo;
-    }
-
-    @Override
     public boolean esVacia() {
         return this.largo > 0;
     }

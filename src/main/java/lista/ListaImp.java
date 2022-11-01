@@ -28,11 +28,6 @@ public class ListaImp <T> implements Lista<T>{
     }
 
     @Override
-    public int largo() {
-        return cantidad;
-    }
-
-    @Override
     public boolean esVacia() {
         return cantidad == 0;
     }

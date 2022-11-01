@@ -45,10 +45,6 @@ public class GrafoMapa {
         return cantidad == tope;
     }
 
-    public boolean esVacio () {
-        return cantidad == 0;
-    }
-
     private int obtenerPosLibre () {
         for (int i = 0; i < this.tope; i++) {
             if (this.centros[i] == null) {
@@ -67,31 +63,10 @@ public class GrafoMapa {
         return -1;
     }
 
-    private void borrarVertice (String vert) {
-        int posABorrar = obtenerPos(vert);
-        centros[posABorrar] = null;
-        for (int k = 0; k < tope; k++) {
-            this.matAdy[posABorrar][k].setExiste(false);
-            this.matAdy[k][posABorrar].setExiste(false);
-        }
-        cantidad--;
-    }
-
-    private boolean existeVertice (String vert) {
-        return obtenerPos(vert) != -1;
-    }
-
-
     private boolean existeCamino (String origen, String destino) {
         int posOrigen = obtenerPos(origen);
         int posDestino = obtenerPos(destino);
         return matAdy[posOrigen][posDestino].isExiste();
-    }
-
-    private void borrarArista (String origen, String destino) {
-        int posOrigen = obtenerPos(origen);
-        int posDestino = obtenerPos(destino);
-        matAdy[posOrigen][posDestino].setExiste(false);
     }
 
     public String insertarCentroUrbano(CentroUrbano aAgregar) {
@@ -291,7 +266,7 @@ public class GrafoMapa {
                 visitados[pos] = true;
                 for (int j = 0; j < tope; j++) {
                     if (matAdy[pos][j].isExiste() && !matAdy[pos][j].getEstadoCamino().equals(EstadoCamino.MALO) && !visitados[j]) {
-                        int costoNuevo = costo[pos] + (int) matAdy[pos][j].getListaCaminos().buscarCaminoMenorCosto();
+                        int costoNuevo = costo[pos] + matAdy[pos][j].getListaCaminos().buscarCaminoMenorCosto();
                         if (costoNuevo < costo[j]) {
                             costo[j] = costoNuevo;
                             anterior[j] = centros[pos];

@@ -6,8 +6,6 @@ public class NodoCamino {
     private Camino camino;
     private NodoCamino sig;
 
-    public NodoCamino() {}
-
     public NodoCamino(Camino camino) {
         this.camino = camino;
     }

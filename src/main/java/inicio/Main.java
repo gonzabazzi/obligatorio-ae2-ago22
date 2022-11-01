@@ -15,12 +15,12 @@ public class Main {
         System.out.println("");
         System.out.println("Func 2- Explorar centro urbano:");
         boolean[] correctas = {true, true, true, false, true, true, true, true};
-        boolean[] correctas2 = {};
+        boolean[] correctas2 = {true, true};
         int[] puntajes = {1, 2, 3, 6, 3, 4, 4,2};
-        int[] puntajes2 = {};
-        System.out.println(nuevoSistema.explorarCentroUrbano(correctas, puntajes, 10).valorString);
-        System.out.println(nuevoSistema.explorarCentroUrbano(correctas, puntajes, 10).valorInteger);
+        int[] puntajes2 = {1, 2, 3};
+        System.out.println("Resultado: " + nuevoSistema.explorarCentroUrbano(correctas, puntajes, 10).valorString + " - Puntaje:" + nuevoSistema.explorarCentroUrbano(correctas, puntajes, 10).valorInteger);
         System.out.println(nuevoSistema.explorarCentroUrbano(correctas2, puntajes2, 10).valorString);
+        System.out.println(nuevoSistema.explorarCentroUrbano(correctas, puntajes2, 10).valorString);
         System.out.println("");
 
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////");
@@ -37,6 +37,7 @@ public class Main {
         System.out.println("");
         System.out.println("Func 4- Filtrar jugadores:");
         System.out.println(nuevoSistema.filtrarJugadores(Consulta.fromString("edad > 15 OR escuela = 'Felipe'")).valorString);
+        System.out.println(nuevoSistema.filtrarJugadores(null).valorString);
         System.out.println("");
 
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////");
@@ -102,8 +103,9 @@ public class Main {
         System.out.println(nuevoSistema.registrarCamino("2", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
         System.out.println(nuevoSistema.registrarCamino("2", "1", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
         System.out.println(nuevoSistema.registrarCamino("3", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
-        System.out.println(nuevoSistema.registrarCamino("2", "4", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
-        System.out.println(nuevoSistema.registrarCamino("4", "2", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "5", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("1", "6", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
+        System.out.println(nuevoSistema.registrarCamino("2", "7", 4.5, 5.0, 400, EstadoCamino.EXCELENTE).valorString);
         System.out.println("");
 
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////");
@@ -111,6 +113,13 @@ public class Main {
         System.out.println("Func 11- Actualizar camino:");
         System.out.println(nuevoSistema.actualizarCamino("1", "2", 9, 45, 20, EstadoCamino.BUENO).valorString);
         System.out.println(nuevoSistema.actualizarCamino("28", "4", 9, 45, 20, EstadoCamino.BUENO).valorString);
+        System.out.println("");
+
+        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println("");
+        System.out.println("Func 12- Centros urbanos por cantidad de saltos:");
+        System.out.println(nuevoSistema.listadoCentrosCantDeSaltos("1", 1).valorString);
+        System.out.println(nuevoSistema.listadoCentrosCantDeSaltos("1", 2).valorString);
         System.out.println("");
 
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////");

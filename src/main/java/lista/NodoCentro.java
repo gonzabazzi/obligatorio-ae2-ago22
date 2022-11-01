@@ -3,7 +3,7 @@ package lista;
 import dominio.CentroUrbano;
 
 public class NodoCentro {
-    private CentroUrbano centro;
+    private final CentroUrbano centro;
     private NodoCentro ant;
     private NodoCentro sig;
 

@@ -26,7 +26,7 @@ public interface Sistema {
      * @param nombre  El nombre del jugador
      * @param escuela La escuela del jugador
      * @param tipo    El tipo de jugador
-     * @return
+     * @return clase retorno
      */
     Retorno registrarJugador(String ci, String nombre, int edad, String escuela, TipoJugador tipo);
 

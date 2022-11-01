@@ -33,11 +33,6 @@ public class ListaCamino implements Lista<Camino> {
         largo++;
     }
 
-    @Override
-    public int largo() {
-        return this.largo;
-    }
-
     public NodoCamino buscarCamino (String origen, String destino){
         NodoCamino camino = inicio;
         while (camino != null){

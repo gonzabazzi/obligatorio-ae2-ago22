@@ -6,9 +6,6 @@ import interfaz.TipoJugador;
 
 public class AbbJugador {
     private NodoAbbJugador raiz;
-    private Jugador jugador;
-
-    private Consulta consulta;
     public int cantIteraciones;
 
     public AbbJugador(){

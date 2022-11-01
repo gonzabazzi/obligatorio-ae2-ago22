@@ -19,7 +19,6 @@ import java.util.Objects;
 
 public class ImplementacionSistema implements Sistema {
     AbbJugador abbJugador;
-    Jugador jugador;
     GrafoMapa mapa;
 
     HashMap<Integer, Lista<Jugador>> jugadoresPorTipo = new HashMap<>();
@@ -41,22 +40,21 @@ public class ImplementacionSistema implements Sistema {
         Retorno ret = new Retorno(Retorno.Resultado.OK, 0, "");
 
         if (correctas == null || puntajes == null) {
-            return Retorno.error1("Error");
+            return Retorno.error1("Alguno de los parámetros no es correcto");
         } else if (correctas.length < 3 || puntajes.length < 3) {
-            return Retorno.error2("No puede haber menor de 3 datos");
+            return Retorno.error2("No puede haber menos de 3 respuestas");
         } else if (correctas.length != puntajes.length) {
-            return Retorno.error3("No puede haber menos de 3 datos");
+            return Retorno.error3("Debe haber la misma cantidad de respuestas y puntajes");
         } else if (minimo <= 0) {
-            return Retorno.error4("El minimo tiene que ser mayor a 0");
+            return Retorno.error4("El puntaje mínimo tiene que ser mayor a 0");
         } else {
             int resultadoExploracion = this.resultadoDeExplorarCentro(correctas, puntajes);
             if (resultadoExploracion >= minimo) {
                 ret.valorString = "pasa";
-                ret.valorInteger = resultadoExploracion;
             } else {
                 ret.valorString = "no pasa";
-                ret.valorInteger = resultadoExploracion;
             }
+            ret.valorInteger = resultadoExploracion;
         }
 
         return ret;
@@ -178,15 +176,15 @@ public class ImplementacionSistema implements Sistema {
     public Retorno registrarCamino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
         Camino aAgregar = new Camino(codigoCentroOrigen, codigoCentroDestino, costo, tiempo, kilometros, estadoDelCamino);
         String retorno = mapa.insertarCamino(aAgregar);
-        if (retorno == "1"){
+        if (Objects.equals(retorno, "1")){
             return Retorno.error1("Costo, tiempo y kilometros deben ser mayores a 0");
-        } else if (retorno == "2") {
+        } else if (Objects.equals(retorno, "2")) {
             return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no pueden ser vacios");
-        } else if (retorno == "3") {
+        } else if (Objects.equals(retorno, "3")) {
             return Retorno.error3("El centro de origen no existe");
-        } else if (retorno == "4") {
+        } else if (Objects.equals(retorno, "4")) {
             return Retorno.error4("El centro de destino no existe");
-        } else if (retorno == "5") {
+        } else if (Objects.equals(retorno, "5")) {
         return Retorno.error5("Ya existe camino entre origen y destino");
         }else {
             return Retorno.ok("El camino fue registrado exitosamente");
@@ -196,15 +194,15 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno actualizarCamino(String codigoCentroOrigen, String codigoCentroDestino, double costo, double tiempo, double kilometros, EstadoCamino estadoDelCamino) {
         String retorno = mapa.actualizarCamino(codigoCentroOrigen, codigoCentroDestino, costo, tiempo, kilometros, estadoDelCamino);
-        if (retorno == "1"){
+        if (Objects.equals(retorno, "1")){
             return Retorno.error1("Costo, tiempo y kilometros deben ser mayores a 0");
-        } else if (retorno == "2") {
+        } else if (Objects.equals(retorno, "2")) {
             return Retorno.error2("El código del centro de origen, centro de destino y estado del camino no pueden ser vacios");
-        } else if (retorno == "3") {
+        } else if (Objects.equals(retorno, "3")) {
             return Retorno.error3("El centro de origen no existe");
-        } else if (retorno == "4") {
+        } else if (Objects.equals(retorno, "4")) {
             return Retorno.error4("El centro de destino no existe");
-        } else if (retorno == "5") {
+        } else if (Objects.equals(retorno, "5")) {
             return Retorno.error5("No existe un camino entre origen y destino");
         }else {
             return Retorno.ok("El camino fue actualizado exitosamente");
@@ -269,15 +267,14 @@ public class ImplementacionSistema implements Sistema {
         }
     }
 
-    //Función auxiliar para agregar jugadores por tipo
     public void agregarJugadorPorTipo(Jugador aAgregar) {
-        int claveTipoJugador = aAgregar.getTipoJugador().getIndice(); // Para el jugador que deseo agregar obtengo su tipo y de su tipo el indice
-        Lista<Jugador> listaTipo = jugadoresPorTipo.get(claveTipoJugador); // Obtengo los jugadores del hashmap que tienen el indice anterior
+        int claveTipoJugador = aAgregar.getTipoJugador().getIndice();
+        Lista<Jugador> listaTipo = jugadoresPorTipo.get(claveTipoJugador);
         if (listaTipo == null) {
-            listaTipo = new ListaImp<>(); // Si la lista no existe la creo
+            listaTipo = new ListaImp<>();
         }
-        listaTipo.insertar(aAgregar); // Infreto en el nodo lista al lugador de ese tipo
-        jugadoresPorTipo.put(claveTipoJugador, listaTipo); // Al hash le voy a agregar para esta clave, el valor que es la lista de ese tipo
+        listaTipo.insertar(aAgregar);
+        jugadoresPorTipo.put(claveTipoJugador, listaTipo);
     }
 
     public Lista<Jugador> obtenerJugadorPorTipo (TipoJugador aBuscar) {

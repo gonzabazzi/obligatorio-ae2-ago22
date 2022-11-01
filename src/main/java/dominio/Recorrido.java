@@ -6,11 +6,9 @@ import lista.NodoCamino;
 
 public class Recorrido {
     private boolean existe;
-    private String codigoAeropuertoOrigen;
-    private String codigoAeropuertoDestino;
-    private double kilometros; //TODO: Se sobre escriben los kilometros en caso de agregar mas de un camino al recorrido
+    private double kilometros;
     private EstadoCamino estadoCamino;
-    private ListaCamino listaCaminos = new ListaCamino();
+    private final ListaCamino listaCaminos = new ListaCamino();
 
     public boolean isExiste() {
         return existe;
@@ -20,28 +18,8 @@ public class Recorrido {
         this.existe = existe;
     }
 
-    public String getCodigoAeropuertoOrigen() {
-        return codigoAeropuertoOrigen;
-    }
-
-    public void setCodigoAeropuertoOrigen(String codigoAeropuertoOrigen) {
-        this.codigoAeropuertoOrigen = codigoAeropuertoOrigen;
-    }
-
-    public String getCodigoAeropuertoDestino() {
-        return codigoAeropuertoDestino;
-    }
-
-    public void setCodigoAeropuertoDestino(String codigoAeropuertoDestino) {
-        this.codigoAeropuertoDestino = codigoAeropuertoDestino;
-    }
-
     public ListaCamino getListaCaminos() {
         return listaCaminos;
-    }
-
-    public void setListaCaminos(ListaCamino listaCaminos) {
-        this.listaCaminos = listaCaminos;
     }
 
     public double getKilometros() {
