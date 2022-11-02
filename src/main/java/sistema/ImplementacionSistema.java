@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class ImplementacionSistema implements Sistema {
+
+    /////////////////////////
+    //252473 Fátima Noble
+    //203859 Gonzalo Bazzi
+    //159689 Sebastián Paulos
+    /////////////////////////
     AbbJugador abbJugador;
     GrafoMapa mapa;
 
